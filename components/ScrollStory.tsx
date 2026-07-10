@@ -12,8 +12,8 @@ import {
   ArrowUpRight,
   ChartNoAxesCombined,
   FileStack,
+  MousePointer2,
   Network,
-  PersonStanding,
   Radar,
   Workflow,
 } from "lucide-react";
@@ -23,7 +23,7 @@ const story = [
   {
     eyebrow: "Diagnose",
     title: "We identify growth bottlenecks",
-    body: "MMe AI maps the friction hiding between your teams, tools, and customer journey.",
+    body: "MMe-AI maps the friction hiding between your teams, tools, and customer journey.",
     icon: Radar,
     x: "12%",
     y: "72%",
@@ -137,6 +137,12 @@ export function ScrollStory() {
     story.map((item) => item.y),
   );
   const pathProgress = useTransform(movementProgress, [0, 1], [0.04, 1]);
+  const entityRotate = useTransform(
+    movementProgress,
+    steps,
+    ["-18deg", "20deg", "-10deg", "18deg", "-14deg"],
+  );
+  const entityScale = useTransform(movementProgress, [0, 0.5, 1], [1, 1.07, 1]);
   const activeStory = story[active];
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -212,6 +218,14 @@ export function ScrollStory() {
             <div className="map-plane absolute inset-[5%] rounded-[36px] border border-white/90 bg-white/46 shadow-[0_45px_100px_rgba(49,92,114,.12)] sm:inset-[6%] lg:inset-[4%]">
               <div className="soft-grid absolute inset-0 rounded-[36px] opacity-60" />
               <div className="absolute inset-0 rounded-[36px] bg-[linear-gradient(135deg,rgba(255,255,255,.48),transparent_55%)]" />
+              <div className="absolute left-5 top-5 z-20 rounded-2xl border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_40px_rgba(49,92,114,.1)] backdrop-blur-sm">
+                <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-[#4FA3A5]">
+                  Live cursor route
+                </span>
+                <span className="mt-1 block text-sm font-bold text-[#18202F]">
+                  {activeStory.eyebrow} / stop 0{active + 1}
+                </span>
+              </div>
 
               <svg
                 className="absolute inset-0 h-full w-full overflow-visible"
@@ -248,12 +262,25 @@ export function ScrollStory() {
 
               <motion.div
                 className="absolute z-30 -translate-x-1/2 -translate-y-1/2"
-                style={{ left: entityX, top: entityY, translateZ: 90 }}
+                style={{
+                  left: entityX,
+                  top: entityY,
+                  rotate: entityRotate,
+                  scale: entityScale,
+                }}
                 aria-hidden="true"
               >
-                <div className="entity-messenger relative flex h-10 w-9 items-center justify-center rounded-[14px] bg-[#18202F] text-white">
-                  <PersonStanding className="h-6 w-6" strokeWidth={1.8} />
-                  <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#7BAE7F]" />
+                <div className="entity-messenger relative flex h-12 w-12 items-center justify-center rounded-[18px] bg-white text-[#18202F]">
+                  <MousePointer2
+                    className="h-7 w-7 -translate-x-0.5 -translate-y-0.5 fill-[#18202F]"
+                    strokeWidth={1.8}
+                  />
+                  <span className="absolute -right-1.5 -top-1.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-[#7BAE7F]" />
+                  <motion.span
+                    className="absolute -bottom-4 left-1/2 h-1.5 w-10 -translate-x-1/2 rounded-full bg-[#315C72]/25 blur-sm"
+                    animate={reduceMotion ? undefined : { opacity: [0.25, 0.7, 0.25], scaleX: [0.7, 1.2, 0.7] }}
+                    transition={{ duration: 1.8, repeat: Infinity }}
+                  />
                 </div>
               </motion.div>
             </div>

@@ -1,0 +1,30 @@
+<svg width="520" height="220" viewBox="0 0 520 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">MMe-AI brand logo</title>
+  <rect width="520" height="220" rx="34" fill="#FFFFFF"/>
+  <g transform="translate(86 22) scale(.82)">
+    <path d="M24 101V58C24 45 40 39 49 49L68 73C73 79 82 79 87 73L105 50C113 40 130 45 130 58V96C130 113 116 126 99 126H79C62 126 50 113 53 97L55 86"
+      stroke="url(#fullGradient)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 69C91 50 113 43 130 55C142 64 144 81 136 93C128 106 112 110 98 103"
+      stroke="url(#fullGradient)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 72L98 55L117 61L134 79" stroke="#335A9E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".86"/>
+    <path d="M98 55L108 78L126 65" stroke="#4FA3A5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+    <path d="M108 78L122 96L139 83" stroke="#29C982" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+    <circle cx="82" cy="72" r="6" fill="#315C72"/>
+    <circle cx="98" cy="55" r="6" fill="#2E77C8"/>
+    <circle cx="108" cy="78" r="6" fill="#4FA3A5"/>
+    <circle cx="126" cy="65" r="6" fill="#36C9AA"/>
+    <circle cx="134" cy="79" r="6" fill="#21C878"/>
+    <circle cx="122" cy="96" r="6" fill="#2EAC73"/>
+  </g>
+  <text x="260" y="108" text-anchor="middle" font-family="Segoe UI, Aptos, Arial, sans-serif" font-size="29" font-weight="500" letter-spacing=".02em" fill="#071537">AI-driven Intelligence</text>
+  <text x="260" y="171" text-anchor="middle" font-family="Segoe UI, Aptos, Arial, sans-serif" font-size="61" font-weight="800" letter-spacing=".01em" fill="#071B4E">MMe-AI</text>
+  <defs>
+    <linearGradient id="fullGradient" x1="21" y1="74" x2="139" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2442B8"/>
+      <stop offset=".28" stop-color="#1FA9D8"/>
+      <stop offset=".52" stop-color="#E23CB8"/>
+      <stop offset=".74" stop-color="#4FA3A5"/>
+      <stop offset="1" stop-color="#20C778"/>
+    </linearGradient>
+  </defs>
+</svg>

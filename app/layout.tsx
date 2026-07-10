@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MMe AI — Automation that moves businesses forward",
+  title: "MMe-AI | Industry-Specific AI Business OS",
   description:
-    "MMe AI builds intelligent systems for content, leads, workflows, reporting, and sustainable business growth.",
+    "MMe-AI builds custom AI dashboards for growing businesses to manage leads, content, follow-ups, reports and automation from one place.",
   openGraph: {
-    title: "MMe AI — Automation that moves businesses forward",
+    title: "MMe-AI | Industry-Specific AI Business OS",
     description:
-      "Automated systems for content, leads, workflows, reporting, and growth.",
+      "Custom AI dashboards for leads, content, follow-ups, reports and automation.",
     type: "website",
   },
   robots: {

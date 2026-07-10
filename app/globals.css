@@ -145,27 +145,28 @@ section[id] {
 
 .entity-messenger {
   box-shadow:
-    0 0 0 7px rgba(255, 255, 255, 0.92),
-    0 0 0 9px rgba(79, 163, 165, 0.26),
-    0 16px 34px rgba(49, 92, 114, 0.32);
+    0 0 0 7px rgba(255, 255, 255, 0.94),
+    0 0 0 10px rgba(79, 163, 165, 0.2),
+    0 0 34px rgba(79, 163, 165, 0.28),
+    0 18px 40px rgba(49, 92, 114, 0.26);
 }
 
 .entity-messenger::before {
   content: "";
   position: absolute;
-  inset: -14px;
-  border: 1px solid rgba(79, 163, 165, 0.34);
-  border-radius: 50%;
-  animation: messenger-pulse 2.4s ease-out infinite;
+  inset: -16px;
+  border: 1px solid rgba(79, 163, 165, 0.38);
+  border-radius: 22px;
+  animation: messenger-pulse 2.2s ease-out infinite;
 }
 
 .entity-messenger::after {
   content: "";
   position: absolute;
-  width: 22px;
-  height: 8px;
-  left: 7px;
-  bottom: -20px;
+  width: 28px;
+  height: 10px;
+  left: 10px;
+  bottom: -18px;
   border-radius: 50%;
   background: rgba(24, 32, 47, 0.18);
   filter: blur(5px);
