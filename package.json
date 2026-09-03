@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run lint"
+    "check": "npm run typecheck && npm run lint",
+    "lead-agent": "node tools/lead-agent/lead-agent.mjs",
+    "lead-agent:self-test": "node tools/lead-agent/lead-agent.mjs --self-test"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",

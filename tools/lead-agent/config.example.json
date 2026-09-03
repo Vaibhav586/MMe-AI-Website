@@ -1,0 +1,8 @@
+{
+  "industry": "real estate consultants",
+  "location": "Delhi NCR",
+  "target": 50,
+  "sources": "tools/lead-agent/sources.sample.txt",
+  "maxPagesPerSite": 4,
+  "timeoutMs": 12000
+}
