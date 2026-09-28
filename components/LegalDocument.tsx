@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeft, Shield, Mail, Phone } from "lucide-react";
 
 type LegalSection = {
   title: string;
@@ -20,54 +22,72 @@ export function LegalDocument({
   sections,
 }: LegalDocumentProps) {
   return (
-    <main className="min-h-screen bg-[#F7F3EA] px-5 py-10 text-[#18202F] sm:px-8 lg:px-12">
+    <main className="min-h-screen bg-[#070913] px-5 py-10 text-slate-200 sm:px-8 lg:px-12 selection:bg-indigo-500/30 selection:text-white">
       <div className="mx-auto max-w-4xl">
-        <Link
-          href="/"
-          className="inline-flex rounded-2xl border border-[#D9E2E1] bg-white/65 px-4 py-3 text-sm font-bold text-[#315C72] transition-colors hover:bg-white"
-        >
-          ← Back to MMe-AI
-        </Link>
+        <div className="flex items-center justify-between pb-6 border-b border-white/[0.08]">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs font-semibold text-slate-300 transition-colors hover:bg-white/[0.08] hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Back to MMe-AI</span>
+          </Link>
 
-        <section className="mt-10 rounded-[34px] border border-[#D9E2E1] bg-white/68 p-6 shadow-[0_28px_80px_rgba(49,92,114,.08)] backdrop-blur-sm sm:p-10">
-          <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#4FA3A5]">
-            MMe-AI legal
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="relative h-8 w-8 overflow-hidden rounded-lg border border-indigo-500/30 bg-[#0d122e] p-0.5">
+              <Image
+                src="/logo.png"
+                alt="MMe-AI Logo"
+                width={32}
+                height={32}
+                className="h-full w-full object-cover rounded-md"
+              />
+            </div>
+            <span className="text-sm font-bold text-white">
+              MMe<span className="text-indigo-400">-AI</span>
+            </span>
+          </Link>
+        </div>
+
+        <section className="mt-8 rounded-2xl border border-indigo-500/20 bg-[#0c1028]/90 p-6 shadow-2xl backdrop-blur-md sm:p-10">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-400">
+            <Shield className="h-3.5 w-3.5" />
+            MMe-AI Legal Document
           </span>
-          <h1 className="mt-4 text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[0.98]">
+          <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             {title}
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[#667085]">
+          <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-400">
             {description}
           </p>
-          <p className="mt-4 text-sm text-[#667085]">Last updated: July 10, 2026</p>
+          <p className="mt-4 text-xs font-mono text-slate-500">Last updated: 2026</p>
         </section>
 
         <div className="mt-6 space-y-4">
           {sections.map((section) => (
             <section
               key={section.title}
-              className="rounded-[28px] border border-[#D9E2E1] bg-white/58 p-6 shadow-[0_16px_45px_rgba(49,92,114,.05)]"
+              className="rounded-2xl border border-white/[0.08] bg-[#090d20]/80 p-6 sm:p-8"
             >
-              <h2 className="text-2xl font-semibold">{section.title}</h2>
-              <div className="mt-4 space-y-3 text-sm leading-6 text-[#667085]">
-                {section.body.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+              <h2 className="text-lg sm:text-xl font-bold text-white">{section.title}</h2>
+              <div className="mt-3 space-y-3 text-xs sm:text-sm leading-relaxed text-slate-400">
+                {section.body.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
                 ))}
               </div>
             </section>
           ))}
         </div>
 
-        <section className="mt-6 rounded-[28px] border border-[#D9E2E1] bg-[#EEF4F2] p-6">
-          <h2 className="text-xl font-semibold">Contact</h2>
-          <p className="mt-3 text-sm leading-6 text-[#667085]">
-            For questions about these terms, privacy, refunds, demo requests, or
-            data deletion, contact MMe-AI at{" "}
-            <a className="font-semibold text-[#315C72]" href={`mailto:${contactEmail}`}>
+        <section className="mt-8 rounded-2xl border border-indigo-500/20 bg-[#0b0f24] p-6 sm:p-8">
+          <h2 className="text-base font-bold text-white">Contact & Support</h2>
+          <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed">
+            For questions about these terms, privacy, refunds, demo requests, or data deletion, reach out to Manish Kumar at{" "}
+            <a className="font-semibold text-indigo-400 hover:underline" href={`mailto:${contactEmail}`}>
               {contactEmail}
             </a>{" "}
-            or{" "}
-            <a className="font-semibold text-[#315C72]" href="tel:+918851144571">
+            or call{" "}
+            <a className="font-semibold text-indigo-400 hover:underline" href={`tel:${contactPhone}`}>
               {contactPhone}
             </a>
             .
