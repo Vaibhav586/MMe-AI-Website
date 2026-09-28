@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1400"/>
+<title>MME AI — Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#060813;color:#f8fafc;width:1400px;min-height:788px;}
+.wrap{width:1400px;padding:48px 56px 40px;}
+
+/* HEADER */
+.header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:44px;}
+.logo-row{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.logo-mark{width:32px;height:32px;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.logo-mark span{color:#fff;font-size:13px;font-weight:900;letter-spacing:-0.5px;}
+.brand-name{font-size:13px;font-weight:700;color:#a5b4fc;letter-spacing:2px;text-transform:uppercase;}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(99,102,241,0.35);background:rgba(99,102,241,0.08);border-radius:999px;padding:4px 14px;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#a5b4fc;margin-bottom:14px;}
+.dot{width:5px;height:5px;border-radius:50%;background:#6366f1;}
+h1{font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1.15;color:#fff;max-width:680px;}
+.sub{margin-top:8px;font-size:13px;color:#64748b;max-width:480px;line-height:1.6;}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:36px;}
+.card{border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;position:relative;border:1px solid rgba(255,255,255,0.08);background:#090d22;}
+.card.featured{border:2px solid #6366f1;background:#0b1030;box-shadow:0 0 48px rgba(99,102,241,0.16);transform:translateY(-6px);}
+.card.enterprise{border:1px solid rgba(99,102,241,0.22);background:#0a0e26;}
+.badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#6366f1;color:#fff;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:3px 14px;border-radius:999px;white-space:nowrap;}
+.plan-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.plan-name{font-size:22px;font-weight:900;letter-spacing:-0.5px;color:#fff;}
+.seats-pill{font-size:9px;font-family:monospace;color:#a5b4fc;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);padding:3px 8px;border-radius:6px;white-space:nowrap;margin-top:3px;}
+.tagline{font-size:11px;color:#64748b;line-height:1.5;margin-bottom:10px;}
+.capacity-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(99,102,241,0.2);background:rgba(99,102,241,0.06);border-radius:999px;padding:4px 10px;font-size:10px;color:#c7d2fe;margin-bottom:14px;}
+.cap-dot{width:5px;height:5px;border-radius:50%;background:#818cf8;}
+.price-block{border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);padding:12px 0;margin-bottom:14px;display:flex;gap:20px;}
+.price-item{}
+.price-label{font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#475569;margin-bottom:2px;}
+.price-val{font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.5px;font-variant-numeric:tabular-nums;}
+.price-val.monthly{font-size:18px;color:#a5b4fc;}
+.price-suffix{font-size:10px;color:#475569;margin-left:2px;}
+.features{list-style:none;display:flex;flex-direction:column;gap:7px;flex:1;}
+.features li{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:#94a3b8;line-height:1.4;}
+.check{width:13px;height:13px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check svg{width:7px;height:7px;}
+.cta{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);}
+.cta button{width:100%;border-radius:999px;padding:10px;font-size:11px;font-weight:700;letter-spacing:0.5px;cursor:pointer;transition:all .2s;}
+.cta .btn-default{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);color:#fff;}
+.cta .btn-featured{background:#6366f1;border:none;color:#fff;box-shadow:0 0 20px rgba(99,102,241,0.35);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="logo-row">
+    <div class="logo-mark"><span>M</span></div>
+    <span class="brand-name">MME AI</span>
+  </div>
+  <div class="pill"><span class="dot"></span>Automation &bull; AI &bull; Managed Workflows</div>
+  <h1>Choose the Right AI Business OS for Your Scale</h1>
+  <p class="sub">Built to scale from focused automation to business-critical AI operations.</p>
+</div>
+
+<div class="cards">
+
+  <!-- BASIC -->
+  <div class="card">
+    <div class="plan-header">
+      <span class="plan-name">BASIC</span>
+      <span class="seats-pill">Up to 5 seats</span>
+    </div>
+    <p class="tagline">Growing businesses / boutique sales teams</p>
+    <div class="capacity-pill"><span class="cap-dot"></span>Standard AI capacity</div>
+    <div class="price-block">
+      <div class="price-item">
+        <div class="price-label">One-time Setup</div>
+        <div class="price-val">&#8377;19,999</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">Monthly</div>
+        <div class="price-val monthly">&#8377;9,999<span class="price-suffix">/ mo</span></div>
+      </div>
+    </div>
+    <ul class="features">
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Core Manage&ndash;Monitor&ndash;Execute platform</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Standard AI capacity</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Up to 5 team seats</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Daily velocity safeguards</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Real-time execution observability</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Standard email &amp; chat support</li>
+    </ul>
+    <div class="cta"><button class="btn-default">Talk to MME AI</button></div>
+  </div>
+
+  <!-- GROWTH -->
+  <div class="card featured">
+    <div class="badge">RECOMMENDED FOR SCALING TEAMS</div>
+    <div class="plan-header">
+      <span class="plan-name">GROWTH</span>
+      <span class="seats-pill">Up to 15 seats</span>
+    </div>
+    <p class="tagline">Scaling mid-market companies / RevOps teams</p>
+    <div class="capacity-pill"><span class="cap-dot"></span>Higher AI capacity</div>
+    <div class="price-block">
+      <div class="price-item">
+        <div class="price-label">One-time Setup</div>
+        <div class="price-val">&#8377;44,999</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">Monthly</div>
+        <div class="price-val monthly">&#8377;24,999<span class="price-suffix">/ mo</span></div>
+      </div>
+    </div>
+    <ul class="features">
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Core Manage&ndash;Monitor&ndash;Execute platform</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Higher AI capacity</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Up to 15 team seats</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Daily velocity safeguards</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Real-time execution observability</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Priority workflow execution</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Advanced multi-agent capabilities</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Priority uptime</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Dedicated onboarding specialist</li>
+    </ul>
+    <div class="cta"><button class="btn-featured">Talk to MME AI</button></div>
+  </div>
+
+  <!-- ENTERPRISE -->
+  <div class="card enterprise">
+    <div class="plan-header">
+      <span class="plan-name">ENTERPRISE</span>
+      <span class="seats-pill">Unlimited / extended</span>
+    </div>
+    <p class="tagline">Large enterprises / high-volume operations</p>
+    <div class="capacity-pill"><span class="cap-dot"></span>Custom / high-volume AI capacity</div>
+    <div class="price-block">
+      <div class="price-item">
+        <div class="price-label">One-time Setup</div>
+        <div class="price-val">&#8377;75,999</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">Monthly</div>
+        <div class="price-val monthly">&#8377;49,999<span class="price-suffix">/ mo</span></div>
+      </div>
+    </div>
+    <ul class="features">
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Core Manage&ndash;Monitor&ndash;Execute platform</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Custom / high-volume AI capacity</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Unlimited / extended seats</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Priority workflow execution</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Advanced multi-agent capabilities</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Dedicated execution support</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Audit logs &amp; compliance reporting</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>BYOK (Bring Your Own Key)</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Private deployment</li>
+      <li><span class="check"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6 7,2" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Custom SLAs</li>
+    </ul>
+    <div class="cta"><button class="btn-default">Talk to MME AI</button></div>
+  </div>
+
+</div>
+
+<!-- COMPARISON STRIP -->
+<div style="border-radius:16px;border:1px solid rgba(255,255,255,0.07);background:#0a0e24;padding:28px 32px;margin-bottom:24px;">
+  <p style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:2px;color:#475569;text-align:center;margin-bottom:20px;">What Changes as You Scale?</p>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;text-align:center;">
+
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <span style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#818cf8;font-weight:700;">AI Capacity</span>
+      <span style="font-size:10px;background:rgba(30,41,59,0.8);color:#94a3b8;padding:5px 8px;border-radius:8px;">Standard</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#c7d2fe;padding:5px 8px;border-radius:8px;">Higher</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#e0e7ff;padding:5px 8px;border-radius:8px;font-weight:600;">Custom / High-volume</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <span style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#818cf8;font-weight:700;">Team Seats</span>
+      <span style="font-size:10px;background:rgba(30,41,59,0.8);color:#94a3b8;padding:5px 8px;border-radius:8px;">5</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#c7d2fe;padding:5px 8px;border-radius:8px;">15</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#e0e7ff;padding:5px 8px;border-radius:8px;font-weight:600;">Unlimited / extended</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <span style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#818cf8;font-weight:700;">Workflow Priority</span>
+      <span style="font-size:10px;background:rgba(30,41,59,0.8);color:#94a3b8;padding:5px 8px;border-radius:8px;">Standard</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#c7d2fe;padding:5px 8px;border-radius:8px;">Priority</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#e0e7ff;padding:5px 8px;border-radius:8px;font-weight:600;">Priority / Custom</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <span style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#818cf8;font-weight:700;">AI Agents</span>
+      <span style="font-size:10px;background:rgba(30,41,59,0.8);color:#94a3b8;padding:5px 8px;border-radius:8px;">Standard</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#c7d2fe;padding:5px 8px;border-radius:8px;">Advanced multi-agent</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#e0e7ff;padding:5px 8px;border-radius:8px;font-weight:600;">Advanced / Custom</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <span style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#818cf8;font-weight:700;">Support</span>
+      <span style="font-size:10px;background:rgba(30,41,59,0.8);color:#94a3b8;padding:5px 8px;border-radius:8px;">Standard</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#c7d2fe;padding:5px 8px;border-radius:8px;">Dedicated onboarding</span>
+      <span style="font-size:10px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#e0e7ff;padding:5px 8px;border-radius:8px;font-weight:600;">Dedicated execution</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTTOM ROW: Value Progression + AI Capacity + Upgrade Logic -->
+<div style="display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;margin-bottom:24px;">
+
+  <!-- Value Progression -->
+  <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.07);background:#0a0e24;padding:22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+      <span style="font-size:11px;font-weight:900;letter-spacing:1px;color:#fff;">BASIC</span>
+      <span style="font-size:9px;color:#475569;">Start</span>
+    </div>
+    <span style="color:#6366f1;font-size:14px;">&#8595;</span>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+      <span style="font-size:11px;font-weight:900;letter-spacing:1px;color:#a5b4fc;">GROWTH</span>
+      <span style="font-size:9px;color:#475569;">Scale</span>
+    </div>
+    <span style="color:#6366f1;font-size:14px;">&#8595;</span>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+      <span style="font-size:11px;font-weight:900;letter-spacing:1px;color:#c7d2fe;">ENTERPRISE</span>
+      <span style="font-size:9px;color:#475569;">Control &amp; Govern</span>
+    </div>
+    <p style="margin-top:10px;font-size:10px;font-weight:700;color:#fff;line-height:1.4;">More than more features &mdash;<br/>more operational capacity.</p>
+    <p style="font-size:9px;color:#475569;line-height:1.5;margin-top:4px;">Upgrade as your AI workload, automation volume, team size and governance needs grow.</p>
+  </div>
+
+  <!-- AI Capacity -->
+  <div style="border-radius:14px;border:1px solid rgba(99,102,241,0.2);background:rgba(99,102,241,0.05);padding:22px 24px;">
+    <p style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:2px;color:#818cf8;margin-bottom:14px;">AI Capacity</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:10px;font-weight:700;color:#fff;min-width:72px;">Basic</span>
+        <span style="font-size:10px;color:#94a3b8;line-height:1.5;">Standard monthly AI allocation</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:10px;font-weight:700;color:#a5b4fc;min-width:72px;">Growth</span>
+        <span style="font-size:10px;color:#94a3b8;line-height:1.5;">Higher monthly AI allocation</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:10px;font-weight:700;color:#c7d2fe;min-width:72px;">Enterprise</span>
+        <span style="font-size:10px;color:#94a3b8;line-height:1.5;">Custom / high-volume allocation based on workload</span>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:9px;color:#334155;line-height:1.6;border-top:1px solid rgba(255,255,255,0.05);padding-top:12px;">AI capacity is designed around expected workload and usage. Exact credit allowances are determined by MME AI based on workload, model/API costs and deployment requirements.</p>
+  </div>
+
+  <!-- When to Upgrade -->
+  <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.07);background:#0a0e24;padding:22px 20px;display:flex;flex-direction:column;gap:12px;">
+    <p style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:2px;color:#475569;">When Should You Upgrade?</p>
+    <div style="border-radius:10px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.12);padding:12px;">
+      <p style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#6366f1;margin-bottom:5px;">Basic &rarr; Growth</p>
+      <p style="font-size:10px;color:#94a3b8;line-height:1.5;">Your automation usage is growing, teams are expanding, and workflows are becoming more AI-intensive.</p>
+    </div>
+    <div style="border-radius:10px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.12);padding:12px;">
+      <p style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#818cf8;margin-bottom:5px;">Growth &rarr; Enterprise</p>
+      <p style="font-size:10px;color:#94a3b8;line-height:1.5;">You need higher-scale automation, stronger governance, dedicated support, custom controls or private deployment.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;">
+  <p style="font-size:9px;color:#334155;max-width:600px;line-height:1.6;">Pricing and final scope may vary based on workflow complexity, integrations, deployment requirements and business needs.</p>
+  <div style="display:inline-flex;align-items:center;gap:8px;background:#6366f1;border-radius:999px;padding:9px 24px;">
+    <span style="font-size:11px;font-weight:700;color:#fff;letter-spacing:0.5px;">Talk to MME AI</span>
+  </div>
+  <p style="font-size:10px;color:#475569;letter-spacing:0.5px;">www.mme-ai.com &nbsp;&middot;&nbsp; Less busywork. More business.</p>
+</div>
+
+</div>
+</body>
+</html>
