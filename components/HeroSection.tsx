@@ -1,220 +1,143 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  ArrowRight, 
-  Sparkles, 
-  Bot, 
-  Zap, 
-  TrendingUp, 
-  CheckCircle2, 
-  Clock, 
-  Send, 
-  Layers, 
-  Cpu, 
-  Activity, 
-  BarChart3,
-  ShieldCheck,
-  UserCheck,
-  MessageSquare
-} from "lucide-react";
-import { IllustrativeBadge } from "@/components/IllustrativeBadge";
+import { ArrowRight, Play, Zap, Bot } from "lucide-react";
 import { useDemoModal } from "@/components/DemoModalProvider";
+import { SampleDataBadge } from "@/components/SampleDataBadge";
+import { VideoModal } from "@/components/VideoModal";
+import { track } from "@/lib/track";
+
+type Tab = "LEADS" | "AI" | "WORKFLOWS" | "ACTIONS" | "REPORTS";
+
+// Sample figures for the hero mockup. Not customer results; the panel is labelled "Sample data".
+const TABS: Record<Tab, { title: string; stats: { val: string; label: string; color: string }[]; status: string; signals: string[] }> = {
+  LEADS: {
+    title: "Lead pipeline",
+    stats: [
+      { val: "124", label: "New leads", color: "text-white" },
+      { val: "18", label: "Follow-ups due", color: "text-amber-400" },
+      { val: "37", label: "Active deals", color: "text-indigo-400" },
+      { val: "12", label: "Won", color: "text-emerald-400" },
+    ],
+    status: "Routing new enquiries",
+    signals: ["3 high-priority leads today", "Rahul Sharma qualified for 3 BHK", "Average WhatsApp reply: 1.8 min"],
+  },
+  AI: {
+    title: "AI agents",
+    stats: [
+      { val: "4", label: "Agents working", color: "text-white" },
+      { val: "42", label: "Drafts written", color: "text-emerald-400" },
+      { val: "38", label: "Leads qualified", color: "text-indigo-400" },
+      { val: "9", label: "Awaiting approval", color: "text-amber-400" },
+    ],
+    status: "Reading enquiry context",
+    signals: ["42 follow-up messages drafted", "Tone matched to your brand", "Output checked against your inventory data"],
+  },
+  WORKFLOWS: {
+    title: "Automations",
+    stats: [
+      { val: "24", label: "Active rules", color: "text-white" },
+      { val: "0", label: "Failed tasks", color: "text-emerald-400" },
+      { val: "142h", label: "Saved / month", color: "text-indigo-400" },
+      { val: "6", label: "Tools connected", color: "text-purple-400" },
+    ],
+    status: "24 workflows running",
+    signals: ["Idle-lead reminder sent", "Weekly report set for Sunday", "Proposal sent from template"],
+  },
+  ACTIONS: {
+    title: "Needs your approval",
+    stats: [
+      { val: "8", label: "Pending", color: "text-amber-400" },
+      { val: "15", label: "Done automatically", color: "text-emerald-400" },
+      { val: "3", label: "Priority calls", color: "text-indigo-400" },
+      { val: "2", label: "Offers out", color: "text-purple-400" },
+    ],
+    status: "Sorted by deal value",
+    signals: ["Approve WhatsApp offer for Unit 14B", "Call with Dr. Mehra at 4:30 PM", "Site visit confirmation ready"],
+  },
+  REPORTS: {
+    title: "This month",
+    stats: [
+      { val: "₹8.4Cr", label: "Pipeline value", color: "text-white" },
+      { val: "24%", label: "Close rate", color: "text-indigo-400" },
+      { val: "4.2m", label: "Avg. response", color: "text-purple-400" },
+      { val: "31", label: "Site visits", color: "text-emerald-400" },
+    ],
+    status: "Tracking what sells",
+    signals: ["Google Ads leads close best", "Weekend replies 3x faster", "Summary sent to founders"],
+  },
+};
 
 export function HeroSection() {
   const { openDemo } = useDemoModal();
-  const [activeTab, setActiveTab] = useState<"LEAD" | "AI" | "WORKFLOW" | "ACTION" | "ANALYTICS">("LEAD");
-  const [eventTriggered, setEventTriggered] = useState(false);
-
-  // Dynamic content depending on activeTab
-  const tabContent = {
-    LEAD: {
-      leftTitle: "Lead Pipeline",
-      leftBadge: "Real-time sync",
-      stats: [
-        { val: "124", label: "New Leads", color: "text-white" },
-        { val: "18", label: "Follow-ups Due", color: "text-amber-400" },
-        { val: "37", label: "Active Opps", color: "text-indigo-400" },
-        { val: "12", label: "Conversions", color: "text-emerald-400" },
-      ],
-      footerNote: "Lead capture: Website, WhatsApp & Ads",
-      centerTitle: "Lead Routing & Qualification",
-      centerSubtitle: "Auto-qualified based on intent & budget",
-      status: "Automated routing active - 99.4%",
-      insights: [
-        "3 high-priority leads detected today",
-        "Lead 'Rahul Sharma' qualified for 3 BHK",
-        "WhatsApp response time: 1.8 mins avg",
-        "Lead-to-opportunity rate up by 14%",
-      ],
-    },
-    AI: {
-      leftTitle: "AI Model Fleet",
-      leftBadge: "Multi-Model AI",
-      stats: [
-        { val: "99.2%", label: "Accuracy", color: "text-white" },
-        { val: "1.2s", label: "Latency", color: "text-emerald-400" },
-        { val: "4", label: "Active Agents", color: "text-indigo-400" },
-        { val: "840+", label: "Actions / Day", color: "text-purple-400" },
-      ],
-      footerNote: "Models: GPT-4o, Claude 3.5, Llama 3",
-      centerTitle: "Reasoning & Context Engine",
-      centerSubtitle: "Extracts customer intent and history",
-      status: "Neural context stream connected",
-      insights: [
-        "Sentiment analysis: 94% positive",
-        "Auto-drafted 42 follow-up messages",
-        "Customer tone calibrated per vertical",
-        "Zero hallucination guardrails active",
-      ],
-    },
-    WORKFLOW: {
-      leftTitle: "Automation Engine",
-      leftBadge: "Live triggers",
-      stats: [
-        { val: "24", label: "Active Rules", color: "text-white" },
-        { val: "0", label: "Failed Tasks", color: "text-emerald-400" },
-        { val: "142h", label: "Saved / Mo", color: "text-indigo-400" },
-        { val: "99.9%", label: "Uptime", color: "text-purple-400" },
-      ],
-      footerNote: "Triggers: Webhooks, DB events, Time",
-      centerTitle: "End-to-End Workflow Graph",
-      centerSubtitle: "Automates repetitive cross-tool steps",
-      status: "Automation Running - 24 Workflows",
-      insights: [
-        "Lead idle > 2 days reminder fired",
-        "Weekly reporting scheduled for Sunday",
-        "CRM data mirrored to reporting layer",
-        "Document generator dispatched proposal",
-      ],
-    },
-    ACTION: {
-      leftTitle: "Action Queue",
-      leftBadge: "Needs attention",
-      stats: [
-        { val: "8", label: "Pending Tasks", color: "text-amber-400" },
-        { val: "15", label: "Auto-Executed", color: "text-emerald-400" },
-        { val: "3", label: "VIP Calls", color: "text-indigo-400" },
-        { val: "2", label: "Contracts Out", color: "text-purple-400" },
-      ],
-      footerNote: "Human-in-the-loop approval ready",
-      centerTitle: "Smart Task Execution",
-      centerSubtitle: "Surfaces high-leverage business moves",
-      status: "Queue prioritized by revenue impact",
-      insights: [
-        "Approve WhatsApp offer for Prestige deal",
-        "Call scheduled with Dr. Mehra at 4:30 PM",
-        "Follow-up email ready for one-click send",
-        "Site visit confirmation waiting approval",
-      ],
-    },
-    ANALYTICS: {
-      leftTitle: "Executive Signal",
-      leftBadge: "Real-time KPIs",
-      stats: [
-        { val: "+18%", label: "MoM Growth", color: "text-emerald-400" },
-        { val: "₹8.4Cr", label: "Pipeline Value", color: "text-white" },
-        { val: "24%", label: "Close Rate", color: "text-indigo-400" },
-        { val: "4.2m", label: "Avg Response", color: "text-purple-400" },
-      ],
-      footerNote: "Granular weekly & monthly reporting",
-      centerTitle: "Business Intelligence Hub",
-      centerSubtitle: "Clear visibility into what creates revenue",
-      status: "Pipeline velocity tracking active",
-      insights: [
-        "Google Ads leads show highest close rate",
-        "Weekend response speed increased 3x",
-        "Healthcare vertical enquiries surged 28%",
-        "Forecasted target attainment: 114%",
-      ],
-    },
-  };
-
-  const current = tabContent[activeTab];
+  const [activeTab, setActiveTab] = useState<Tab>("LEADS");
+  const [videoOpen, setVideoOpen] = useState(false);
+  const current = TABS[activeTab];
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-32 ambient-grid">
-      {/* Background ambient glowing orbs */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-indigo-600/15 rounded-full blur-[120px] -z-10" />
-      <div className="pointer-events-none absolute top-48 left-1/4 w-[350px] h-[350px] bg-purple-600/10 rounded-full blur-[100px] -z-10" />
+    <section className="relative overflow-hidden pt-10 pb-16 lg:pt-20 lg:pb-24 ambient-grid">
+      <div className="pointer-events-none hidden sm:block absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-indigo-600/15 rounded-full blur-[120px] -z-10" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Hero Header Content */}
-        <div className="mx-auto max-w-4xl text-center">
-          {/* Pill Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-300 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-            <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-            <span>Manage · Monitor · Execute with Autonomous AI</span>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+        {/* Copy + CTAs */}
+        <div className="text-center lg:text-left">
+          <div className="inline-flex items-center rounded-full border border-indigo-500/30 bg-indigo-500/[0.08] px-3.5 py-1 text-[11px] sm:text-xs font-semibold tracking-wide text-indigo-300">
+            Manage · Monitor · Execute — for Indian sales teams
           </div>
 
-          {/* Main Headline */}
-          <h1 className="mt-8 text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-[68px] leading-[1.08]">
-            Manage, Monitor, and Execute Enterprise Workflows with{" "}
-            <span className="bg-gradient-to-r from-white via-indigo-100 to-indigo-300 bg-clip-text text-transparent">
-              Autonomous AI Agents.
-            </span>
+          <h1 className="mt-5 text-[34px] font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[56px]">
+            Your AI operations team, set up for you in 21 days.
           </h1>
 
-          {/* Subtitle with clean SaaS positioning */}
-          <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Accelerate pipeline velocity, eliminate manual data entry across your CRM and communication channels, and orchestrate multi-agent workflows with enterprise-grade observability and zero data risk.
+          <p className="mt-5 text-base sm:text-lg leading-relaxed text-slate-300 max-w-xl mx-auto lg:mx-0">
+            MMe-AI connects your CRM, WhatsApp and sheets, then runs your lead qualification, follow-ups and reports automatically — built around how your business works.
           </p>
 
-          {/* 4 Architectural Benefit Badges */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/25 bg-indigo-500/10 px-3.5 py-1 text-xs font-medium text-indigo-300">
-              <Cpu className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Manage: Leads, Context & Processes</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-300">
-              <Activity className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Monitor: Execution Observability & Audit Logs</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/25 bg-purple-500/10 px-3.5 py-1 text-xs font-medium text-purple-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-purple-400" />
-              <span>Execute: Multi-Agent Workflows Across Tools</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/25 bg-amber-500/10 px-3.5 py-1 text-xs font-medium text-amber-300">
-              <UserCheck className="h-3.5 w-3.5 text-amber-400" />
-              <span>Human-in-the-Loop Control</span>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
             <button
-              onClick={() => openDemo()}
-              className="glow-button inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-[0_0_25px_rgba(99,102,241,0.4)]"
+              type="button"
+              id="hero-primary-cta"
+              onClick={() => openDemo({ source: "hero", label: "Get a free workflow audit" })}
+              className="glow-button inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-[0_0_25px_rgba(99,102,241,0.4)]"
             >
-              <span>Book an Enterprise Demo</span>
-              <ArrowRight className="h-4 w-4" />
+              <span>Get a free workflow audit</span>
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
-            <a
-              href="#governance"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white backdrop-blur-md transition-all hover:bg-white/[0.08] hover:border-white/30"
+            <button
+              type="button"
+              id="hero-secondary-cta"
+              onClick={() => {
+                track("cta_click", { location: "hero", label: "Watch 2-min demo" });
+                setVideoOpen(true);
+              }}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-base font-semibold text-white transition-all hover:border-white/30 hover:bg-white/[0.08]"
             >
-              <span>Explore Architecture</span>
-              <ArrowRight className="h-4 w-4 text-slate-400" />
-            </a>
+              <Play className="h-4 w-4 fill-white" aria-hidden="true" />
+              <span>Watch 2-min demo</span>
+            </button>
           </div>
 
-          <p className="mt-4 text-xs font-medium text-slate-400">
-            Connects seamlessly with your CRM, WhatsApp Cloud, Google Workspace, Slack, and internal APIs.
+          <p className="mt-4 text-xs text-muted">
+            No need to replace your CRM · Setup in 21 days · Cancel monthly plans anytime
           </p>
         </div>
 
-        {/* Interactive Hero Dashboard Widget */}
-        <div className="mt-14 mx-auto max-w-5xl">
-          {/* Widget Sub-tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-4 overflow-x-auto py-2">
-            {(["LEAD", "AI", "WORKFLOW", "ACTION", "ANALYTICS"] as const).map((tab) => (
+        {/* Sample dashboard */}
+        <div className="relative rounded-2xl border border-white/10 bg-surface/90 p-4 sm:p-5 shadow-[0_25px_80px_rgba(0,0,0,0.65)] glow-card-purple">
+          <SampleDataBadge className="absolute -top-3 right-4" />
+
+          <div role="tablist" aria-label="Dashboard views" className="flex gap-1.5 overflow-x-auto pb-3">
+            {(Object.keys(TABS) as Tab[]).map((tab) => (
               <button
                 key={tab}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === tab}
                 onClick={() => setActiveTab(tab)}
-                className={`text-xs font-mono font-bold tracking-widest px-4 py-2 rounded-lg transition-all duration-200 uppercase cursor-pointer ${
+                className={`shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-mono font-bold tracking-wider transition-colors ${
                   activeTab === tab
-                    ? "text-white bg-indigo-600/30 border border-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.35)] scale-105"
-                    : "text-slate-400 hover:text-slate-200 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05]"
+                    ? "border border-indigo-400 bg-indigo-600/30 text-white"
+                    : "border border-white/[0.06] bg-white/[0.02] text-muted hover:text-slate-200"
                 }`}
               >
                 {tab}
@@ -222,127 +145,59 @@ export function HeroSection() {
             ))}
           </div>
 
-          {/* Main Dashboard Card Container */}
-          <div className="relative rounded-2xl border border-white/10 bg-[#0d1229]/90 p-5 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl glow-card-purple transition-all duration-300">
-            <div className="mb-3 flex justify-end">
-              <IllustrativeBadge />
+          <div role="tabpanel" className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+            <div className="rounded-xl border border-white/[0.07] bg-surface/80 p-4 sm:col-span-3">
+              <div className="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
+                <span className="text-sm font-semibold text-white">{current.title}</span>
+                <span className="flex items-center gap-1.5 text-[10px] font-mono text-indigo-300">
+                  <Zap className="h-3 w-3" aria-hidden="true" /> Live
+                </span>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-2.5">
+                {current.stats.map((s) => (
+                  <div key={s.label} className="rounded-lg border border-white/[0.04] bg-white/[0.03] p-2.5">
+                    <div className={`text-xl font-bold tracking-tight ${s.color}`}>{s.val}</div>
+                    <div className="mt-0.5 text-[11px] text-muted">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <svg className="mt-3 h-12 w-full" viewBox="0 0 300 48" fill="none" aria-hidden="true">
+                <line x1="20" y1="24" x2="110" y2="10" stroke="rgba(99,102,241,0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
+                <line x1="20" y1="24" x2="110" y2="38" stroke="rgba(99,102,241,0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
+                <line x1="110" y1="10" x2="200" y2="24" stroke="rgba(168,85,247,0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
+                <line x1="110" y1="38" x2="200" y2="24" stroke="rgba(168,85,247,0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
+                <line x1="200" y1="24" x2="280" y2="24" stroke="rgba(16,185,129,0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
+                <circle cx="20" cy="24" r="7" fill="#131938" stroke="#6366f1" strokeWidth="2" />
+                <circle cx="110" cy="10" r="6" fill="#131938" stroke="#8b5cf6" strokeWidth="2" />
+                <circle cx="110" cy="38" r="6" fill="#131938" stroke="#8b5cf6" strokeWidth="2" />
+                <circle cx="200" cy="24" r="7" fill="#131938" stroke="#8b5cf6" strokeWidth="2" />
+                <circle cx="280" cy="24" r="8" fill="#17224d" stroke="#10b981" strokeWidth="2.5" />
+              </svg>
+              <div className="mt-2 flex items-center gap-2 text-[11px] text-indigo-200">
+                <span className="h-2 w-2 rounded-full bg-indigo-400 motion-safe:animate-pulse" />
+                {current.status}
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-              
-              {/* Left Column: Dynamic Metrics based on activeTab */}
-              <div className="md:col-span-4 rounded-xl border border-white/[0.07] bg-[#090d20]/80 p-5 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
-                    <span className="text-sm font-semibold text-white tracking-wide">{current.leftTitle}</span>
-                    <span className="text-[10px] font-mono text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
-                      {current.leftBadge}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mt-5">
-                    {current.stats.map((s, idx) => (
-                      <div key={idx} className="rounded-lg bg-white/[0.03] p-3 border border-white/[0.04]">
-                        <div className={`text-2xl font-bold tracking-tight ${s.color}`}>{s.val}</div>
-                        <div className="text-xs text-slate-400 mt-1">{s.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-slate-400">
-                  <span>{current.footerNote}</span>
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                </div>
+
+            <div className="rounded-xl border border-white/[0.07] bg-surface/80 p-4 sm:col-span-2">
+              <div className="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
+                <span className="text-sm font-semibold text-white">Signals</span>
+                <Bot className="h-4 w-4 text-purple-400" aria-hidden="true" />
               </div>
-
-              {/* Center Column: Interactive Graphic & Live State */}
-              <div className="md:col-span-5 rounded-xl border border-indigo-500/20 bg-[#090d20]/80 p-5 flex flex-col items-center justify-between relative overflow-hidden">
-                <div className="w-full flex items-center justify-between pb-3 border-b border-white/[0.06]">
-                  <span className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-indigo-400" />
-                    {current.centerTitle}
-                  </span>
-                  <span className="text-[10px] font-mono text-indigo-400 uppercase tracking-wider bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
-                    Active
-                  </span>
-                </div>
-
-                {/* Animated Graph Diagram */}
-                <div className="relative my-4 w-full h-36 flex items-center justify-center">
-                  <svg className="w-full h-full" viewBox="0 0 300 130" fill="none">
-                    {/* Connecting lines */}
-                    <line x1="50" y1="65" x2="150" y2="35" stroke="rgba(99, 102, 241, 0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
-                    <line x1="50" y1="65" x2="150" y2="95" stroke="rgba(99, 102, 241, 0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
-                    <line x1="150" y1="35" x2="250" y2="65" stroke="rgba(168, 85, 247, 0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
-                    <line x1="150" y1="95" x2="250" y2="65" stroke="rgba(168, 85, 247, 0.45)" strokeWidth="2" strokeDasharray="4 4" className="subtle-node-line" />
-                    <line x1="150" y1="35" x2="150" y2="95" stroke="rgba(99, 102, 241, 0.3)" strokeWidth="1.5" />
-
-                    {/* Left Node */}
-                    <circle cx="50" cy="65" r="14" fill="#131938" stroke="#6366f1" strokeWidth="2" />
-                    <circle cx="50" cy="65" r="5" fill="#a5b4fc" />
-
-                    {/* Center Top */}
-                    <circle cx="150" cy="35" r="15" fill="#131938" stroke="#8b5cf6" strokeWidth="2" />
-                    <circle cx="150" cy="35" r="5" fill="#c084fc" />
-
-                    {/* Center Bottom */}
-                    <circle cx="150" cy="95" r="15" fill="#131938" stroke="#8b5cf6" strokeWidth="2" />
-                    <circle cx="150" cy="95" r="5" fill="#c084fc" />
-
-                    {/* Right Node */}
-                    <circle cx="250" cy="65" r="16" fill="#17224d" stroke="#10b981" strokeWidth="2.5" />
-                    <circle cx="250" cy="65" r="6" fill="#34d399" />
-                  </svg>
-                </div>
-
-                <div className="w-full text-center space-y-2">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/15 px-4 py-1.5 text-xs font-medium text-indigo-200">
-                    <span className="h-2 w-2 rounded-full bg-indigo-400 animate-pulse" />
-                    <span>{eventTriggered ? "Processing Inbound Webhook Payload (0.18s)..." : current.status}</span>
-                  </div>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEventTriggered(true);
-                        setTimeout(() => setEventTriggered(false), 2000);
-                      }}
-                      className="text-[11px] font-mono text-amber-300 hover:text-amber-200 bg-amber-400/10 hover:bg-amber-400/20 border border-amber-400/30 px-3 py-1 rounded-full transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <Sparkles className="h-3 w-3 text-amber-400" />
-                      {eventTriggered ? "Signal Ingested ✓" : `Simulate ${activeTab} Signal`}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Dynamic Business Insights */}
-              <div className="md:col-span-3 rounded-xl border border-white/[0.07] bg-[#090d20]/80 p-5 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
-                    <span className="text-sm font-semibold text-white tracking-wide">Live Signals</span>
-                    <Bot className="h-4 w-4 text-purple-400" />
-                  </div>
-                  <ul className="mt-4 space-y-3">
-                    {current.insights.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                        <span className={`h-1.5 w-1.5 rounded-full mt-1.5 shrink-0 ${
-                          idx === 0 ? "bg-amber-400" : idx === 1 ? "bg-indigo-400" : idx === 2 ? "bg-emerald-400" : "bg-purple-400"
-                        }`} />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-slate-400 flex items-center justify-between">
-                  <span>Updated live</span>
-                  <span className="text-emerald-400 font-mono">100% online</span>
-                </div>
-              </div>
-
+              <ul className="mt-3 space-y-2.5">
+                {current.signals.map((item, idx) => (
+                  <li key={item} className="flex items-start gap-2 text-xs text-slate-300">
+                    <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${idx === 0 ? "bg-amber-400" : idx === 1 ? "bg-indigo-400" : "bg-emerald-400"}`} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </div>
+
+      {videoOpen && <VideoModal onClose={() => setVideoOpen(false)} />}
     </section>
   );
 }

@@ -1,21 +1,29 @@
 @import "tailwindcss";
 
+/* Brand tokens. Colours are Tailwind theme colours (bg-bg, bg-surface, text-text, text-muted,
+   bg-brand, bg-accent ...) and CSS variables (--color-*). --accent is reserved for primary CTA
+   buttons, the "Recommended" badge and key numbers; indigo (--brand) is for links, icons and the logo "-AI". */
+@theme inline {
+  --color-bg: #070913;
+  --color-surface: #0e1222;
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8; /* 7.7:1 on --color-bg, passes WCAG AA 4.5:1 */
+  --color-brand: #6366f1;
+  --color-accent: #f5a524;
+
+  /* next/font variables (set on <html> in app/layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
 @layer base {
   :root {
-    --bg-dark: #070913;
-    --bg-card: #0d1124;
-    --bg-card-hover: #131938;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-glow: rgba(99, 102, 241, 0.28);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --accent-purple: #6366f1;
-    --accent-purple-glow: rgba(99, 102, 241, 0.4);
-    --accent-amber: #f59e0b;
-    --accent-amber-light: #fbbf24;
-    --accent-emerald: #10b981;
-    --accent-teal: #14b8a6;
+    --bg: var(--color-bg);
+    --surface: var(--color-surface);
+    --text: var(--color-text);
+    --muted: var(--color-muted);
+    --brand: var(--color-brand);
+    --accent: var(--color-accent);
   }
 
   * {
@@ -24,19 +32,50 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #070913;
-    color: #f8fafc;
+    background-color: var(--bg);
+    color: var(--text);
     color-scheme: dark;
   }
 
   body {
     margin: 0;
-    background-color: #070913;
-    color: #f8fafc;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+
+  /* Inter is loaded at 400/500 only; bold text uses Inter Tight 600/700 instead of faux-bold Inter. */
+  :where(.font-semibold, .font-bold, .font-extrabold, .font-black, strong, b) {
+    font-family: var(--font-display);
+  }
+
+  /* Visible keyboard focus on every interactive element. */
+  :where(a, button, summary, input, select, textarea, [role="tab"], [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Respect reduced-motion: stop decorative animation and smooth scrolling. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   ::selection {
@@ -50,7 +89,7 @@
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #070913;
+    background: var(--bg);
   }
   ::-webkit-scrollbar-thumb {
     background: #1e264f;
@@ -87,15 +126,17 @@
   transform: translateY(-2px);
 }
 
+/* Primary CTA button: saffron accent with dark text (9.9:1 contrast). */
 .glow-button {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.35);
+  background: var(--accent);
+  color: var(--bg) !important;
+  box-shadow: 0 0 20px rgba(245, 165, 36, 0.3);
   transition: all 0.25s ease;
 }
 
 .glow-button:hover {
-  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-  box-shadow: 0 0 28px rgba(99, 102, 241, 0.55);
+  background: #f7b64d;
+  box-shadow: 0 0 28px rgba(245, 165, 36, 0.45);
   transform: translateY(-1px);
 }
 

@@ -1,132 +1,167 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Menu, X, Play } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useDemoModal } from "@/components/DemoModalProvider";
+import { Logo } from "@/components/Logo";
+
+// Industries with their own page link to it; the rest open the audit form with that industry preselected.
+const SOLUTIONS: { label: string; href?: string; industry?: string }[] = [
+  { label: "Real Estate", href: "/real-estate" },
+  { label: "Healthcare", industry: "Healthcare" },
+  { label: "Education", industry: "Education" },
+  { label: "Agencies", industry: "Services / Agency" },
+];
+
+const LINKS = [
+  { label: "Product", href: "/#how-it-works" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Platform", href: "/platform" },
+];
+
+const linkClass = "whitespace-nowrap text-sm font-medium text-slate-300 transition-colors hover:text-white";
 
 export function Navbar() {
   const { openDemo } = useDemoModal();
-  const onOpenDemo = () => openDemo();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const solutionsRef = useRef<HTMLDivElement>(null);
 
-  const navLinks = [
-    { label: "Product", href: "#product" },
-    { label: "Solutions", href: "#solutions" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Architecture", href: "#architecture" },
-    { label: "Governance", href: "#governance" },
-    { label: "Platform Advantage", href: "#comparison" },
-  ];
+  // Close the Solutions dropdown on outside click or Escape.
+  useEffect(() => {
+    if (!solutionsOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (!solutionsRef.current?.contains(e.target as Node)) setSolutionsOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setSolutionsOpen(false);
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [solutionsOpen]);
+
+  const pickSolution = (item: (typeof SOLUTIONS)[number]) => {
+    setSolutionsOpen(false);
+    setMobileMenuOpen(false);
+    if (item.industry) openDemo({ industry: item.industry, source: "nav-solutions", label: item.label });
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.07] bg-[#070913]/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo */}
-        <Link href="#top" className="flex items-center gap-3 group">
-          <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-indigo-500/30 bg-[#0d122e] p-1 shadow-[0_0_15px_rgba(99,102,241,0.25)] transition-transform duration-300 group-hover:scale-105">
-            <Image
-              src="/logo.png"
-              alt="MMe-AI Logo"
-              width={40}
-              height={40}
-              className="h-full w-full object-cover rounded-lg"
-              priority
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tight text-white flex items-center">
-              MMe<span className="text-indigo-400 font-extrabold">-AI</span>
-            </span>
-            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium -mt-1 hidden sm:block">
-              AI Business OS
-            </span>
-          </div>
+    <header className="sticky top-0 z-50 w-full border-b border-white/[0.07] bg-bg/85 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 lg:h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link href="/" aria-label="MMe-AI home" className="shrink-0">
+          <Logo />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-slate-300 transition-colors hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+        {/* Desktop navigation */}
+        <nav aria-label="Main" className="hidden lg:flex items-center gap-7">
+          <Link href={LINKS[0].href} className={linkClass}>{LINKS[0].label}</Link>
+          <div ref={solutionsRef} className="relative">
+            <button
+              type="button"
+              aria-expanded={solutionsOpen}
+              aria-controls="solutions-menu"
+              onClick={() => setSolutionsOpen((o) => !o)}
+              className={`${linkClass} inline-flex items-center gap-1`}
             >
-              {link.label}
-            </Link>
+              Solutions
+              <ChevronDown className={`h-4 w-4 transition-transform ${solutionsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+            </button>
+            {solutionsOpen && (
+              <ul id="solutions-menu" className="absolute left-1/2 top-full mt-3 w-52 -translate-x-1/2 rounded-xl border border-white/10 bg-surface p-2 shadow-2xl">
+                {SOLUTIONS.map((item) => (
+                  <li key={item.label}>
+                    {item.href ? (
+                      <Link href={item.href} onClick={() => pickSolution(item)} className="block rounded-lg px-3 py-2 text-sm text-slate-200 hover:bg-white/[0.06] hover:text-white">
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <button type="button" onClick={() => pickSolution(item)} className="block w-full rounded-lg px-3 py-2 text-left text-sm text-slate-200 hover:bg-white/[0.06] hover:text-white">
+                        {item.label}
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          {LINKS.slice(1).map((link) => (
+            <Link key={link.label} href={link.href} className={linkClass}>{link.label}</Link>
           ))}
         </nav>
 
-        {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Desktop actions */}
+        <div className="hidden lg:flex items-center gap-5">
+          <Link href="/login" className={linkClass}>Login</Link>
           <button
-            onClick={onOpenDemo}
-            className="glow-button inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all"
+            type="button"
+            onClick={() => openDemo({ source: "nav", label: "Get a free audit" })}
+            className="glow-button whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold text-white"
           >
-            Book an Enterprise Demo
+            Get a free audit
           </button>
-          <a
-            href="#rs-real-estate"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-slate-200 transition-all hover:bg-white/[0.08] hover:text-white hover:border-white/20"
-          >
-            <Play className="h-3.5 w-3.5 fill-indigo-400 text-indigo-400" />
-            <span>See MMe-AI in Action</span>
-          </a>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="flex md:hidden items-center gap-2">
+        {/* Mobile actions */}
+        <div className="flex lg:hidden items-center gap-2">
           <button
-            onClick={onOpenDemo}
-            className="glow-button rounded-full px-3.5 py-1.5 text-xs font-semibold text-white"
+            type="button"
+            onClick={() => openDemo({ source: "nav-mobile", label: "Get a free audit" })}
+            className="glow-button whitespace-nowrap rounded-full px-3.5 py-2 text-xs font-semibold text-white"
           >
-            Book an Enterprise Demo
+            Get a free audit
           </button>
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            type="button"
+            onClick={() => setMobileMenuOpen((o) => !o)}
             className="rounded-lg border border-white/10 p-2 text-slate-300 hover:text-white"
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/10 bg-[#0a0e22]/98 px-6 py-6 backdrop-blur-2xl">
-          <nav className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-medium text-slate-300 hover:text-white py-1 border-b border-white/[0.04]"
-              >
-                {link.label}
+        <nav id="mobile-menu" aria-label="Main" className="lg:hidden border-b border-white/10 bg-surface px-6 py-5">
+          <ul className="flex flex-col gap-1">
+            <li>
+              <Link href={LINKS[0].href} onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-200">
+                {LINKS[0].label}
               </Link>
+            </li>
+            <li className="py-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted">Solutions</span>
+              <ul className="mt-1 grid grid-cols-2 gap-1">
+                {SOLUTIONS.map((item) => (
+                  <li key={item.label}>
+                    {item.href ? (
+                      <Link href={item.href} onClick={() => pickSolution(item)} className="block py-1.5 text-sm text-slate-300">{item.label}</Link>
+                    ) : (
+                      <button type="button" onClick={() => pickSolution(item)} className="block py-1.5 text-left text-sm text-slate-300">{item.label}</button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </li>
+            {LINKS.slice(1).map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-200">
+                  {link.label}
+                </Link>
+              </li>
             ))}
-            <div className="flex flex-col gap-3 pt-3">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenDemo();
-                }}
-                className="glow-button w-full rounded-full py-3 text-center text-sm font-semibold text-white"
-              >
-                Book an Enterprise Demo
-              </button>
-              <a
-                href="#rs-real-estate"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center rounded-full border border-white/10 py-2.5 text-sm font-medium text-slate-300"
-              >
-                See MMe-AI in Action
-              </a>
-            </div>
-          </nav>
-        </div>
+            <li>
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-200">Login</Link>
+            </li>
+          </ul>
+        </nav>
       )}
     </header>
   );

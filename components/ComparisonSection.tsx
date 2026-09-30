@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ArrowRight, Zap, Database, Shield, Eye, CheckCircle2, Lock, Cpu, Layers } from "lucide-react";
+import { Check, Zap, Database, Shield, Eye, CheckCircle2, Cpu } from "lucide-react";
 import { SOC2_CLAIM } from "@/lib/claims";
 
 export function ComparisonSection() {
@@ -22,7 +22,7 @@ export function ComparisonSection() {
     "Replayable run ledger with complete observability",
     "4-tier cross-system durable memory graph",
     "Policy-driven human approval gates for critical actions",
-    "Sub-second automated workflow execution",
+    "Fast, automated workflow execution",
   ];
 
   // Architectural Paradigm Comparison
@@ -34,7 +34,7 @@ export function ComparisonSection() {
     },
     {
       capability: "Execution Observability & Auditability",
-      mme: "Cryptographic event ledger, step-level latency, token costs, and replay",
+      mme: "Complete, replayable activity log with step-level timing and costs",
       legacy: "Basic activity logs or black-box outcomes with no inspectable reasoning",
     },
     {
@@ -76,7 +76,7 @@ export function ComparisonSection() {
       title: "Monitor",
       icon: Eye,
       summary: "Total execution observability in real time.",
-      detail: "Track every operation with real-time monitoring, immutable audit logs, and full agent visibility—inspect every decision, API call, and latency metric.",
+      detail: "Track every operation with real-time monitoring, complete audit logs, and full agent visibility—inspect every decision, API call, and latency metric.",
       benefit: "Provides complete transparency and confidence in every automated action.",
     },
     {
@@ -89,7 +89,7 @@ export function ComparisonSection() {
   ];
 
   return (
-    <section id="comparison" className="relative py-24 lg:py-32 bg-[#070914] border-t border-white/[0.05]">
+    <section id="comparison" className="relative py-24 lg:py-32 bg-bg border-t border-white/[0.05]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Heading */}
@@ -99,7 +99,7 @@ export function ComparisonSection() {
             <span>Platform Advantage</span>
           </div>
           <h2 className="mt-6 text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Don't replace your stack. <br />
+            Don&apos;t replace your stack. <br />
             <span className="bg-gradient-to-r from-white via-indigo-100 to-indigo-300 bg-clip-text text-transparent">
               Empower it with autonomous AI execution.
             </span>
@@ -113,21 +113,21 @@ export function ComparisonSection() {
         <div className="mt-16 mx-auto max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           
           {/* Left: Fragmented Point Solutions */}
-          <div className="rounded-2xl border border-white/[0.08] bg-[#0c1024]/80 p-8 sm:p-10 flex flex-col justify-between shadow-lg">
+          <div className="rounded-2xl border border-white/[0.08] bg-surface/80 p-8 sm:p-10 flex flex-col justify-between shadow-lg">
             <div>
               <div className="flex items-center gap-3 pb-6 border-b border-white/[0.08]">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.05] border border-white/10 text-slate-400">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.05] border border-white/10 text-muted">
                   <Database className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-slate-200">Fragmented Point Solutions</h3>
-                  <span className="text-xs text-slate-400">Isolated Apps & Brittle Glue</span>
+                  <span className="text-xs text-muted">Isolated Apps & Brittle Glue</span>
                 </div>
               </div>
 
               <ul className="mt-8 space-y-4">
                 {traditionalPoints.map((point) => (
-                  <li key={point} className="flex items-start gap-3 text-sm text-slate-400">
+                  <li key={point} className="flex items-start gap-3 text-sm text-muted">
                     <span className="h-5 w-5 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
                       <span className="h-1.5 w-1.5 rounded-full bg-slate-500" />
                     </span>
@@ -137,7 +137,7 @@ export function ComparisonSection() {
               </ul>
             </div>
 
-            <div className="mt-10 pt-4 border-t border-white/[0.06] text-xs text-slate-400">
+            <div className="mt-10 pt-4 border-t border-white/[0.06] text-xs text-muted">
               Traps valuable context in disconnected silos with high manual maintenance overhead.
             </div>
           </div>
@@ -175,36 +175,40 @@ export function ComparisonSection() {
         </div>
 
         {/* Dynamic Architectural Comparison Matrix & Core Pillars */}
-        <div className="mt-20 rounded-2xl border border-white/10 bg-[#0c1026]/90 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+        <div className="mt-20 rounded-2xl border border-white/10 bg-surface/90 p-6 sm:p-10 shadow-2xl">
           <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
             <div>
               <h3 className="text-xl font-bold text-white tracking-wide">
                 Architectural Breakdown
               </h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-muted mt-1">
                 How modern autonomous agent execution compares to legacy point solutions.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 bg-black/40 p-1 rounded-xl border border-white/10">
+            <div role="tablist" aria-label="Comparison view" className="flex items-center gap-2 bg-black/40 p-1 rounded-xl border border-white/10">
               <button
                 type="button"
+                role="tab"
+                aria-selected={activeTab === "architecture"}
                 onClick={() => setActiveTab("architecture")}
                 className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${
                   activeTab === "architecture"
                     ? "bg-indigo-600 text-white shadow-sm"
-                    : "text-slate-400 hover:text-white"
+                    : "text-muted hover:text-white"
                 }`}
               >
                 Architecture Comparison
               </button>
               <button
                 type="button"
+                role="tab"
+                aria-selected={activeTab === "pillars"}
                 onClick={() => setActiveTab("pillars")}
                 className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${
                   activeTab === "pillars"
                     ? "bg-amber-400 text-slate-950 font-bold shadow-sm"
-                    : "text-slate-400 hover:text-white"
+                    : "text-muted hover:text-white"
                 }`}
               >
                 Core Value Pillars
@@ -217,7 +221,7 @@ export function ComparisonSection() {
             <div className="mt-6 overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-white/[0.08] text-slate-400 font-mono text-[11px]">
+                  <tr className="border-b border-white/[0.08] text-muted font-mono text-[11px]">
                     <th className="py-3.5 pr-4 w-1/4">Enterprise Capability</th>
                     <th className="py-3.5 px-4 w-1/2 bg-amber-400/10 text-amber-300 font-bold border-x border-amber-400/20">
 MMe-AI Execution Layer
@@ -237,7 +241,7 @@ MMe-AI Execution Layer
                           <span>{row.mme}</span>
                         </div>
                       </td>
-                      <td className="py-4 pl-4 text-slate-400">
+                      <td className="py-4 pl-4 text-muted">
                         {row.legacy}
                       </td>
                     </tr>
@@ -253,7 +257,7 @@ MMe-AI Execution Layer
               {valuePillars.map((pillar) => {
                 const Icon = pillar.icon;
                 return (
-                  <div key={pillar.title} className="rounded-xl border border-white/[0.08] bg-[#080c1e] p-6 flex flex-col justify-between hover:border-indigo-500/30 transition-all">
+                  <div key={pillar.title} className="rounded-xl border border-white/[0.08] bg-surface p-6 flex flex-col justify-between hover:border-indigo-500/30 transition-all">
                     <div>
                       <div className="flex items-center gap-3 pb-4 border-b border-white/[0.06]">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-500/15 border border-indigo-500/20 text-indigo-400">
@@ -261,7 +265,7 @@ MMe-AI Execution Layer
                         </div>
                         <div>
                           <h4 className="text-sm font-bold text-white tracking-wide">{pillar.title}</h4>
-                          <span className="text-[11px] text-slate-400">{pillar.summary}</span>
+                          <span className="text-[11px] text-muted">{pillar.summary}</span>
                         </div>
                       </div>
                       <p className="text-xs text-slate-300 mt-4 leading-relaxed">
@@ -280,7 +284,7 @@ MMe-AI Execution Layer
 
           {/* Section Footer */}
           <div className="mt-8 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-            <span className="text-slate-400">
+            <span className="text-muted">
               Built to integrate seamlessly with your existing infrastructure, CRM, and communication channels.
             </span>
             <span className="text-indigo-400 font-mono font-semibold shrink-0">

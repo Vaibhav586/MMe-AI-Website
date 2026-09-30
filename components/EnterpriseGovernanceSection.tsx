@@ -1,28 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ShieldCheck,
-  Eye,
-  Brain,
-  CheckCircle2,
-  AlertTriangle,
-  Terminal,
-  RotateCcw,
-  Key,
-  Sliders,
-  Lock,
-  Bot,
-  Workflow,
-  Sparkles,
-  ArrowRight,
-  Database
-} from "lucide-react";
-import { IllustrativeBadge } from "@/components/IllustrativeBadge";
+import { ShieldCheck, Eye, Brain, CheckCircle2, AlertTriangle, Terminal, RotateCcw, Bot } from "lucide-react";
+import { SampleDataBadge } from "@/components/SampleDataBadge";
 import { SOC2_CLAIM } from "@/lib/claims";
 
 export function EnterpriseGovernanceSection() {
-  const [activeGovernanceTab, setActiveGovernanceTab] = useState<"agents" | "observability" | "memory" | "approval">("observability");
+  type GovernanceTab = "agents" | "observability" | "memory" | "approval";
+  const [activeGovernanceTab, setActiveGovernanceTab] = useState<GovernanceTab>("observability");
   const [replayState, setReplayState] = useState<boolean>(false);
   const [activeApprovalStep, setActiveApprovalStep] = useState<"pending" | "approved" | "rejected">("pending");
 
@@ -37,7 +22,7 @@ export function EnterpriseGovernanceSection() {
       role: "Researcher Agent",
       badge: "Context & Retrieval",
       desc: "Queries internal CRM, WhatsApp history, and documents across Google/Microsoft using permission-aware search.",
-      contract: "Zero hallucination guardrails; cites exact source documents.",
+      contract: "Output checked against your inventory data; cites exact source documents.",
     },
     {
       role: "Executor Agent",
@@ -54,8 +39,8 @@ export function EnterpriseGovernanceSection() {
     {
       role: "Auditor Agent",
       badge: "Compliance & Ledger",
-      desc: "Logs every event, latency metric, token cost, and user interaction into an immutable, replayable run ledger.",
-      contract: `${SOC2_CLAIM}; cryptographic provenance on every event.`,
+      desc: "Logs every event, latency metric, token cost, and user interaction into a complete, replayable activity log.",
+      contract: `${SOC2_CLAIM}; complete, replayable activity log.`,
     },
   ];
 
@@ -87,7 +72,7 @@ export function EnterpriseGovernanceSection() {
   ];
 
   return (
-    <section id="governance" className="relative py-24 lg:py-32 bg-[#060813] border-t border-white/[0.05]">
+    <section id="governance" className="relative py-24 lg:py-32 bg-bg border-t border-white/[0.05]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
@@ -105,7 +90,7 @@ export function EnterpriseGovernanceSection() {
         </div>
 
         {/* 4 Feature Tabs Switcher */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
+        <div role="tablist" aria-label="Governance views" className="mt-12 flex flex-wrap items-center justify-center gap-3">
           {[
             { id: "observability", label: "Execution Observability & Audit Logs", icon: Eye },
             { id: "agents", label: "Multi-Agent Teams", icon: Bot },
@@ -118,13 +103,15 @@ export function EnterpriseGovernanceSection() {
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => setActiveGovernanceTab(tab.id as any)}
+                role="tab"
+                aria-selected={isSelected}
+                onClick={() => setActiveGovernanceTab(tab.id as GovernanceTab)}
                 className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold tracking-wide transition-all ${isSelected
                   ? "bg-amber-400 text-slate-950 font-bold shadow-[0_0_20px_rgba(245,158,11,0.35)] scale-105"
                   : "border border-white/10 bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] hover:text-white"
                   }`}
               >
-                <Icon className={`h-4 w-4 ${isSelected ? "text-slate-950" : "text-slate-400"}`} />
+                <Icon className={`h-4 w-4 ${isSelected ? "text-slate-950" : "text-muted"}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -132,7 +119,7 @@ export function EnterpriseGovernanceSection() {
         </div>
 
         {/* Dynamic Display Container */}
-        <div className="mt-12 rounded-2xl border border-white/10 bg-[#0c1026]/95 p-6 sm:p-10 shadow-2xl backdrop-blur-2xl">
+        <div className="mt-12 rounded-2xl border border-white/10 bg-surface/95 p-6 sm:p-10 shadow-2xl">
 
           {/* TAB 1: FULL EXECUTION OBSERVABILITY */}
           {activeGovernanceTab === "observability" && (
@@ -143,7 +130,7 @@ export function EnterpriseGovernanceSection() {
                     <Terminal className="h-5 w-5 text-indigo-400" />
                     Replayable Agent Run Ledger & Audit Trace
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-muted mt-1">
                     Every step, model call, latency metric, and token cost is inspectable and reproducible.
                   </p>
                 </div>
@@ -168,7 +155,7 @@ export function EnterpriseGovernanceSection() {
               {/* Execution Run Timeline */}
               <div className="space-y-3 font-mono text-xs">
                 <div className="flex justify-end">
-                  <IllustrativeBadge />
+                  <SampleDataBadge />
                 </div>
                 {[
                   { step: "01", name: "Inbound Intent Classifier", agent: "Planner Agent", latency: "140ms", tokens: "412 tok ($0.0012)", status: "PASSED", detail: "Parsed customer query: 'Looking for 3 BHK high-rise in Hebbal, ₹2.5-3 Cr budget'. Extracted intent: VIP Luxury Buyer." },
@@ -177,7 +164,7 @@ export function EnterpriseGovernanceSection() {
                   { step: "04", name: "Human Approval Checkpoint", agent: "Approval Gate", latency: "Human In Loop", tokens: "0 tok", status: "APPROVED", detail: "High-value WhatsApp brochure and private site visit reservation approved by Sales Manager Rajesh K." },
                   { step: "05", name: "Sandboxed API Dispatch", agent: "Executor Agent", latency: "180ms", tokens: "0 tok", status: "EXECUTED", detail: "Dispatched WhatsApp Cloud API message with interactive calendar RSVP link. Synced CRM lead stage." },
                 ].map((item) => (
-                  <div key={item.step} className="rounded-xl border border-white/[0.06] bg-[#080c1e] p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:border-indigo-500/30 transition-all">
+                  <div key={item.step} className="rounded-xl border border-white/[0.06] bg-surface p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:border-indigo-500/30 transition-all">
                     <div className="flex items-start gap-3">
                       <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600/20 text-indigo-300 font-bold shrink-0 mt-0.5">
                         {item.step}
@@ -185,17 +172,17 @@ export function EnterpriseGovernanceSection() {
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-white">{item.name}</span>
-                          <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded">
+                          <span className="text-[10px] text-muted bg-white/5 px-2 py-0.5 rounded">
                             {item.agent}
                           </span>
                         </div>
-                        <p className="text-slate-400 text-[11px] mt-1 font-sans">{item.detail}</p>
+                        <p className="text-muted text-[11px] mt-1 font-sans">{item.detail}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 text-[11px] shrink-0 md:text-right">
                       <div>
-                        <span className="text-slate-400 block">{item.latency}</span>
-                        <span className="text-slate-500 block text-[10px]">{item.tokens}</span>
+                        <span className="text-muted block">{item.latency}</span>
+                        <span className="text-muted block text-[10px]">{item.tokens}</span>
                       </div>
                       <span className="rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 px-2 py-1 font-bold">
                         {item.status} ✓
@@ -208,20 +195,20 @@ export function EnterpriseGovernanceSection() {
               {/* Observability Metrics Banner */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/[0.06] text-center">
                 <div className="rounded-lg bg-black/40 p-3">
-                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Total End-to-End Latency</span>
+                  <span className="text-[10px] text-muted uppercase font-mono block">Total End-to-End Latency</span>
                   <span className="text-base font-bold text-white font-mono mt-0.5 block">635ms</span>
                 </div>
                 <div className="rounded-lg bg-black/40 p-3">
-                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Compute Cost</span>
+                  <span className="text-[10px] text-muted uppercase font-mono block">Compute Cost</span>
                   <span className="text-base font-bold text-emerald-400 font-mono mt-0.5 block">$0.0056 / run</span>
                 </div>
                 <div className="rounded-lg bg-black/40 p-3">
-                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Model Routing</span>
-                  <span className="text-base font-bold text-indigo-300 font-mono mt-0.5 block">Claude 3.5 + GPT-4o</span>
+                  <span className="text-[10px] text-muted uppercase font-mono block">Model Routing</span>
+                  <span className="text-base font-bold text-indigo-300 font-mono mt-0.5 block">Best model per task (Anthropic, OpenAI)</span>
                 </div>
                 <div className="rounded-lg bg-black/40 p-3">
-                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Audit Controls</span>
-                  <span className="text-base font-bold text-amber-400 font-mono mt-0.5 block">SOC 2-aligned</span>
+                  <span className="text-[10px] text-muted uppercase font-mono block">Audit Controls</span>
+                  <span className="text-sm font-bold text-amber-400 font-mono mt-0.5 block">{SOC2_CLAIM}</span>
                 </div>
               </div>
             </div>
@@ -235,14 +222,14 @@ export function EnterpriseGovernanceSection() {
                   <Bot className="h-5 w-5 text-indigo-400" />
                   Multi-Agent Teams & Role Separation
                 </h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted mt-1">
                   Divide mission-critical workflows across specialized agent contracts, preventing cascade failures and unauthorized execution.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {agentTeam.map((agent) => (
-                  <div key={agent.role} className="rounded-xl border border-white/[0.08] bg-[#080c1e] p-5 flex flex-col justify-between hover:border-amber-400/40 transition-all">
+                  <div key={agent.role} className="rounded-xl border border-white/[0.08] bg-surface p-5 flex flex-col justify-between hover:border-amber-400/40 transition-all">
                     <div>
                       <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                         <h4 className="text-sm font-bold text-white">{agent.role}</h4>
@@ -255,7 +242,7 @@ export function EnterpriseGovernanceSection() {
                       </p>
                     </div>
                     <div className="mt-4 pt-3 border-t border-white/[0.04]">
-                      <span className="text-[10px] uppercase font-mono text-slate-500 block mb-1">Enforced Boundary:</span>
+                      <span className="text-[10px] uppercase font-mono text-muted block mb-1">Enforced Boundary:</span>
                       <span className="text-[11px] font-mono text-indigo-300 block">
                         {agent.contract}
                       </span>
@@ -292,7 +279,7 @@ export function EnterpriseGovernanceSection() {
                   <CheckCircle2 className="h-5 w-5 text-emerald-400" />
                   Policy-Driven Human-in-the-Loop Controls
                 </h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted mt-1">
                   Automate routine operations at machine speed while routing high-stakes transactions, contract terms, and sensitive outreach to verified human approvers.
                 </p>
               </div>
@@ -300,7 +287,7 @@ export function EnterpriseGovernanceSection() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 {/* Risk-Tiered Action Matrix */}
                 <div className="space-y-3">
-                  <span className="text-xs font-mono uppercase text-slate-400 tracking-wider block font-semibold">
+                  <span className="text-xs font-mono uppercase text-muted tracking-wider block font-semibold">
                     Policy Boundaries
                   </span>
 
@@ -332,7 +319,7 @@ export function EnterpriseGovernanceSection() {
                 </div>
 
                 {/* Live Simulated Human Approval Modal */}
-                <div className="rounded-xl border border-white/[0.08] bg-[#080c1e] p-5 shadow-inner">
+                <div className="rounded-xl border border-white/[0.08] bg-surface p-5 shadow-inner">
                   <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5">
                       <AlertTriangle className="h-4 w-4 text-amber-400" />
@@ -343,13 +330,13 @@ export function EnterpriseGovernanceSection() {
 
                   <div className="mt-4 space-y-3 text-xs">
                     <div className="rounded-lg bg-black/40 p-3 text-slate-300">
-                      <div className="text-[10px] text-slate-400 uppercase font-mono mb-1">Generated Action Proposal:</div>
+                      <div className="text-[10px] text-muted uppercase font-mono mb-1">Generated Action Proposal:</div>
                       <p className="leading-relaxed">
                         Send negotiated counter-offer of <strong className="text-white">₹2.65 Cr</strong> (inclusive of 2 covered car parks) for Prestige Towers Unit 14B to client <strong className="text-white">Vikramaditya Singhania</strong>.
                       </p>
                     </div>
 
-                    <div className="flex justify-between items-center text-[11px] text-slate-400 px-1 font-mono">
+                    <div className="flex justify-between items-center text-[11px] text-muted px-1 font-mono">
                       <span>Confidence Score: <strong>96%</strong></span>
                       <span>Assigned Rep: <strong>Rajesh Kumar</strong></span>
                     </div>
@@ -357,6 +344,7 @@ export function EnterpriseGovernanceSection() {
                     <div className="pt-2 flex gap-3">
                       <button
                         type="button"
+                        aria-pressed={activeApprovalStep === "approved"}
                         onClick={() => setActiveApprovalStep("approved")}
                         className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all shadow ${activeApprovalStep === "approved"
                           ? "bg-emerald-600 text-white"
@@ -367,10 +355,11 @@ export function EnterpriseGovernanceSection() {
                       </button>
                       <button
                         type="button"
+                        aria-pressed={activeApprovalStep === "rejected"}
                         onClick={() => setActiveApprovalStep("rejected")}
                         className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${activeApprovalStep === "rejected"
                           ? "bg-red-600 text-white"
-                          : "bg-white/5 hover:bg-red-600/20 text-slate-400 hover:text-red-300"
+                          : "bg-white/5 hover:bg-red-600/20 text-muted hover:text-red-300"
                           }`}
                       >
                         {activeApprovalStep === "rejected" ? "Action Blocked ✗" : "Reject Action"}
@@ -390,14 +379,14 @@ export function EnterpriseGovernanceSection() {
                   <Brain className="h-5 w-5 text-indigo-400" />
                   Multi-Tier Persistent Memory Architecture
                 </h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted mt-1">
                   Maintain persistent, permission-aware organizational context across workflows with structured episodic, semantic, and procedural memory tiers.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {memoryTiers.map((mem) => (
-                  <div key={mem.type} className="rounded-xl border border-white/[0.08] bg-[#080c1e] p-5 flex flex-col justify-between">
+                  <div key={mem.type} className="rounded-xl border border-white/[0.08] bg-surface p-5 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                         <h4 className="text-sm font-bold text-white">{mem.title}</h4>
@@ -409,7 +398,7 @@ export function EnterpriseGovernanceSection() {
                         {mem.desc}
                       </p>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-white/[0.04] text-[11px] font-mono text-slate-400">
+                    <div className="mt-4 pt-3 border-t border-white/[0.04] text-[11px] font-mono text-muted">
                       Storage Policy: <strong className="text-amber-300">{mem.retention}</strong>
                     </div>
                   </div>

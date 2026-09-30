@@ -31,7 +31,7 @@ export function ProblemSection() {
   ];
 
   return (
-    <section className="relative py-20 lg:py-28 bg-[#060812] border-t border-white/[0.05]">
+    <section className="relative py-20 lg:py-28 bg-bg border-t border-white/[0.05]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Quote Callout Banner */}
@@ -47,15 +47,15 @@ export function ProblemSection() {
         {/* Section Heading */}
         <div className="mt-16 text-center max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Your team already has enough software.
+            Leads go cold between your tools.
           </h2>
-          <p className="mt-4 text-lg text-slate-400">
-            The problem is everything between them.
+          <p className="mt-4 text-lg text-muted">
+            The problem is everything between them. Already have a CRM? Keep it. MMe-AI works between the tools you already use.
           </p>
         </div>
 
         {/* Disconnected Tools Network Diagram */}
-        <div className="mt-12 mx-auto max-w-4xl rounded-2xl border border-white/10 bg-[#0a0e22]/90 p-8 sm:p-12 relative overflow-hidden shadow-2xl backdrop-blur-xl">
+        <div className="mt-12 mx-auto max-w-4xl rounded-2xl border border-white/10 bg-surface/90 p-8 sm:p-12 relative overflow-hidden shadow-2xl">
           {/* Subtle connecting mesh background */}
           <div className="relative h-72 sm:h-80 w-full flex items-center justify-center">
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 320">
@@ -75,7 +75,7 @@ export function ProblemSection() {
                 return (
                   <div
                     key={tool.name}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-lg border border-white/10 bg-[#121733]/90 px-3.5 py-2 shadow-lg backdrop-blur-md transition-transform hover:scale-110"
+                    className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-lg border border-white/10 bg-surface/90 px-3.5 py-2 shadow-lg transition-transform hover:scale-110"
                     style={{ left: tool.x, top: tool.y }}
                   >
                     <Icon className="h-4 w-4 text-indigo-400" />

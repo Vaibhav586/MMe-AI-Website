@@ -1,10 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 import { DemoButton } from "@/components/DemoButton";
-import { PHONE_DISPLAY, PHONE_E164, SALES_EMAIL, SOCIAL_LINKS, whatsappLink } from "@/lib/contact";
+import { Logo } from "@/components/Logo";
+import { SITE, SOCIALS } from "@/lib/site";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 
-const SOCIAL_ICONS: Record<keyof typeof SOCIAL_LINKS, { label: string; className: string; path: string }> = {
+const SOCIAL_ICONS: Record<keyof typeof SOCIALS, { label: string; className: string; path: string }> = {
   linkedin: { label: "LinkedIn", className: "text-indigo-400", path: "M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.63 1.63 0 1 0 0-3.26 1.63 1.63 0 0 0 0 3.26M7.86 18.5V10.13H5.07V18.5h2.79z" },
   instagram: { label: "Instagram", className: "text-pink-400", path: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" },
   x: { label: "X (Twitter)", className: "text-sky-400", path: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" },
@@ -12,15 +13,15 @@ const SOCIAL_ICONS: Record<keyof typeof SOCIAL_LINKS, { label: string; className
 };
 
 export function CTAAndFooter() {
-  const socials = (Object.keys(SOCIAL_LINKS) as (keyof typeof SOCIAL_LINKS)[]).filter((key) => SOCIAL_LINKS[key]);
+  const socials = (Object.keys(SOCIALS) as (keyof typeof SOCIALS)[]).filter((key) => SOCIALS[key]);
 
   return (
-    <footer className="relative bg-[#05070f] border-t border-white/[0.08] text-slate-300">
+    <footer className="relative bg-bg border-t border-white/[0.08] text-slate-300">
       
       {/* Pre-footer Call to Action Banner (Matching video frame 01:05) */}
-      <div className="relative border-b border-white/[0.08] bg-gradient-to-b from-[#090d22] to-[#05070f] py-20 lg:py-28 overflow-hidden">
+      <div className="relative border-b border-white/[0.08] bg-gradient-to-b from-surface to-bg py-20 lg:py-28 overflow-hidden">
         {/* Glow orb */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-600/15 rounded-full blur-[140px]" />
+        <div className="pointer-events-none hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-600/15 rounded-full blur-[140px]" />
 
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
@@ -30,28 +31,23 @@ export function CTAAndFooter() {
             </span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Tell us how your business works. We'll identify where MMe-AI can create the most value.
+            Tell us how your business works. We&apos;ll identify where MMe-AI can create the most value.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <DemoButton className="glow-button inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-xl">
-              <span>Book an Enterprise Demo</span>
+            <DemoButton source="footer-cta" className="glow-button inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-xl">
+              <span>Get a free workflow audit</span>
               <ArrowRight className="h-4 w-4" />
             </DemoButton>
-            <a
-              href={whatsappLink("Hi MMe-AI team, I'm interested in MMe-AI.")}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
+              location="footer-cta"
               className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 px-7 py-4 text-base font-semibold text-emerald-300 transition-colors"
             >
               <MessageSquare className="h-4 w-4 text-emerald-400" />
-              <span>Talk to Solutions Engineering</span>
-            </a>
+              <span>Chat on WhatsApp</span>
+            </WhatsAppLink>
           </div>
 
-          <p className="mt-8 text-xs font-mono text-slate-500">
-            mme-ai.com — MMe-AI : Less busywork. More business.
-          </p>
         </div>
       </div>
 
@@ -61,38 +57,27 @@ export function CTAAndFooter() {
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="#top" className="flex items-center gap-3">
-              <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-indigo-500/30 bg-[#0d122e] p-1 shadow-sm">
-                <Image
-                  src="/logo.png"
-                  alt="MMe-AI Logo"
-                  width={40}
-                  height={40}
-                  className="h-full w-full object-cover rounded-lg"
-                />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-white flex items-center">
-                MMe<span className="text-indigo-400 font-extrabold">-AI</span>
-              </span>
+            <Link href="/" aria-label="MMe-AI home" className="inline-flex">
+              <Logo />
             </Link>
-            <p className="text-xs font-semibold text-indigo-300 uppercase tracking-wider">
-              Industry-Specific AI Business OS
+            <p className="text-sm font-semibold text-indigo-300">
+              {SITE.tagline}
             </p>
-            <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+            <p className="text-xs text-muted max-w-sm leading-relaxed">
               Custom AI dashboards for leads, content, follow-ups, reports, automation, and client operations.
             </p>
 
-            <div className="pt-2 space-y-2 text-xs text-slate-400">
+            <div className="pt-2 space-y-2 text-xs text-muted">
               <div className="flex items-center gap-2">
                 <Mail className="h-3.5 w-3.5 text-indigo-400" />
-                <a href={`mailto:${SALES_EMAIL}`} className="hover:text-white transition-colors">
-                  {SALES_EMAIL}
+                <a href={`mailto:${SITE.email}`} className="hover:text-white transition-colors">
+                  {SITE.email}
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-3.5 w-3.5 text-indigo-400" />
-                <a href={`tel:${PHONE_E164}`} className="hover:text-white transition-colors">
-                  {PHONE_DISPLAY}
+                <a href={`tel:${SITE.phoneE164}`} className="hover:text-white transition-colors">
+                  {SITE.phoneDisplay}
                 </a>
               </div>
               <div className="flex items-center gap-2">
@@ -104,28 +89,26 @@ export function CTAAndFooter() {
 
           {/* Product Links */}
           <div className="space-y-3">
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+            <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
               Product
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="#product" className="hover:text-white transition-colors">Product</a></li>
-              <li><a href="#solutions" className="hover:text-white transition-colors">Solutions</a></li>
-              <li><a href="#industries" className="hover:text-white transition-colors">Industries</a></li>
-              <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
-              <li><a href="#architecture" className="hover:text-white transition-colors">Architecture</a></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
+            </h2>
+            <ul className="space-y-2 text-xs text-muted">
+              <li><Link href="/#how-it-works" className="hover:text-white transition-colors">How It Works</Link></li>
+              <li><Link href="/real-estate" className="hover:text-white transition-colors">Real Estate</Link></li>
+              <li><Link href="/#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+              <li><Link href="/platform" className="hover:text-white transition-colors">Platform & Security</Link></li>
+              <li><Link href="/#faq" className="hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
 
           {/* Company Links */}
           <div className="space-y-3">
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+            <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
               Company
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="#top" className="hover:text-white transition-colors">About</a></li>
-              <li><DemoButton className="hover:text-white transition-colors text-left">Contact</DemoButton></li>
-              <li><a href={`mailto:${SALES_EMAIL}`} className="hover:text-white transition-colors">Careers</a></li>
+            </h2>
+            <ul className="space-y-2 text-xs text-muted">
+              <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
               <li><Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
               <li><Link href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link></li>
@@ -135,16 +118,16 @@ export function CTAAndFooter() {
           {/* Social: only profiles set in lib/contact.ts are shown */}
           {socials.length > 0 && (
             <div className="space-y-3">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+              <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
                 Social
-              </h4>
-              <ul className="space-y-2 text-xs text-slate-400">
+              </h2>
+              <ul className="space-y-2 text-xs text-muted">
                 {socials.map((key) => (
                   <li key={key} className="flex items-center gap-2">
                     <svg className={`h-3.5 w-3.5 ${SOCIAL_ICONS[key].className} fill-current`} viewBox="0 0 24 24" aria-hidden="true">
                       <path d={SOCIAL_ICONS[key].path} />
                     </svg>
-                    <a href={SOCIAL_LINKS[key]} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                    <a href={SOCIALS[key]} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                       {SOCIAL_ICONS[key].label}
                     </a>
                   </li>
@@ -156,7 +139,7 @@ export function CTAAndFooter() {
         </div>
 
         {/* Bottom Legal / Copyright Bar */}
-        <div className="mt-14 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="mt-14 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
           <div>
             © 2026 MMe-AI. All rights reserved. Founded by Manish Kumar.
           </div>

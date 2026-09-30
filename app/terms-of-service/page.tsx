@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { LegalDocument } from "@/components/LegalDocument";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms-of-service" },
   title: "Terms of Service | MMe-AI",
   description:
-    "Terms of Service for MMe-AI website, demo requests and custom AI Business OS services.",
+    "Terms of Service for MMe-AI website, demo requests and custom AI automation services.",
 };
 
 export default function TermsOfServicePage() {

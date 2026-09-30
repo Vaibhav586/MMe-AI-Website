@@ -1,21 +1,23 @@
 # Demo request leads
 
-The "Book a demo" form posts to `/api/demo`, which:
+The "Get a free workflow audit" form (modal and /contact) posts to `/api/demo`, which:
 
-1. Validates the submission (name, email, phone, and consent are required).
+1. Validates the submission with the shared zod schema in `lib/lead.ts` (name, work email, WhatsApp number, company and consent are required; the number must be a 10-digit Indian mobile, optionally with +91). It also rejects bot submissions (honeypot field) and rate-limits each IP to 5 requests per 10 minutes.
 2. Saves it by POSTing JSON to `DEMO_LEADS_WEBHOOK_URL`. If this fails, the visitor sees an error and a fallback email link, so no lead is silently lost.
 3. Posts a message to `DEMO_SLACK_WEBHOOK_URL` (optional) for the shared sales channel.
 
-Each record contains: `name, email, phone, industry, plan, message, consent, submittedAt, page, userAgent`.
+Each record contains: `name, email, whatsapp, company, teamSize, industry, message, plan, consent, submittedAt, page, userAgent`.
+
+After a successful save the visitor is sent to `/thank-you`, which embeds the Cal.com booking widget from `NEXT_PUBLIC_CAL_LINK`.
 
 ## Option A: Google Sheet (free, about 10 minutes)
 
 1. Create a Sheet owned by a company Google account (not a personal one) and share it with the sales team.
-2. Add a header row: `submittedAt | name | email | phone | industry | plan | message | page | userAgent`
+2. Add a header row: `submittedAt | name | email | whatsapp | company | teamSize | industry | plan | message | page | userAgent`
 3. Open Extensions > Apps Script and paste:
 
 ```js
-const COLUMNS = ["submittedAt", "name", "email", "phone", "industry", "plan", "message", "page", "userAgent"];
+const COLUMNS = ["submittedAt", "name", "email", "whatsapp", "company", "teamSize", "industry", "plan", "message", "page", "userAgent"];
 
 function doPost(e) {
   const lead = JSON.parse(e.postData.contents);

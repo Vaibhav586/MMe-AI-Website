@@ -1,5 +1,5 @@
-// Security/compliance wording shared across sections so every page says the same thing.
-// Until a SOC 2 audit report actually exists, never say "compliant" or "compliance" here.
-// Once an audit is done, change this to name the type and period, e.g.
-// "SOC 2 Type II audited (Jan–Jun 2027), report available under NDA".
-export const SOC2_CLAIM = "Built with SOC 2-aligned controls";
+// Security wording shared across sections so every page says the same thing.
+// This describes our hosting provider's certification, not an audit of MMe-AI itself.
+// TODO(founder): confirm the hosting provider (e.g. Vercel / AWS) and keep its SOC 2 report link on file.
+// Never say MMe-AI is "SOC 2 compliant" until MMe-AI has its own audit report.
+export const SOC2_CLAIM = "Hosted on SOC 2-certified cloud infrastructure";

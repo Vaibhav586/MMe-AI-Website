@@ -1,23 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Bot, 
-  CheckCircle2, 
-  Sparkles,
-  Home,
-  MessageSquare,
-  Calendar,
-  DollarSign,
-  Award,
-  ChevronRight,
-  Send,
-  PhoneCall,
-  FileText,
-  UserCheck
-} from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Bot, CheckCircle2, Sparkles, Home, MessageSquare, Calendar, DollarSign, Award, ChevronRight, Send, UserCheck } from "lucide-react";
+import { SampleDataBadge } from "@/components/SampleDataBadge";
 
-export function LiveRealEstateExample() {
+export function LiveRealEstateExample({ showSolutionLink = false }: { showSolutionLink?: boolean }) {
   const [activeStep, setActiveStep] = useState(0); // Default to Step 1 (index 0) so user can walk through all 7
   const [testSent, setTestSent] = useState(false);
 
@@ -32,7 +20,7 @@ export function LiveRealEstateExample() {
   ];
 
   return (
-    <section id="rs-real-estate" className="relative py-24 lg:py-32 bg-[#060812] border-t border-white/[0.05]">
+    <section id="rs-real-estate" className="relative py-24 lg:py-32 bg-bg border-t border-white/[0.05]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -44,7 +32,7 @@ export function LiveRealEstateExample() {
           <h2 className="mt-6 text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
             See MMe-AI through a real-estate workflow.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-muted">
             Click any step below to see how MMe-AI automates every phase from lead to closing.
           </p>
         </div>
@@ -54,7 +42,7 @@ export function LiveRealEstateExample() {
           
           {/* Left: 7-step Vertical Sequence */}
           <div className="lg:col-span-5 space-y-2.5">
-            <div className="text-xs font-mono uppercase text-slate-400 px-1 pb-1 flex justify-between">
+            <div className="text-xs font-mono uppercase text-muted px-1 pb-1 flex justify-between">
               <span>Workflow Pipeline</span>
               <span className="text-indigo-400 font-semibold">Step {activeStep + 1} of 7</span>
             </div>
@@ -64,14 +52,15 @@ export function LiveRealEstateExample() {
                 <button
                   key={step.title}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => {
                     setActiveStep(idx);
                     setTestSent(false);
                   }}
                   className={`w-full text-left cursor-pointer rounded-xl p-3.5 transition-all duration-200 border flex items-center justify-between gap-3 ${
                     isSelected
-                      ? "border-amber-400/80 bg-[#121733] shadow-[0_0_25px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/50"
-                      : "border-white/[0.06] bg-[#0c1024]/70 hover:border-white/15 hover:bg-[#0e132c]"
+                      ? "border-amber-400/80 bg-surface shadow-[0_0_25px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/50"
+                      : "border-white/[0.06] bg-surface/70 hover:border-white/15 hover:bg-surface"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -79,7 +68,7 @@ export function LiveRealEstateExample() {
                       className={`flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold shrink-0 transition-transform ${
                         isSelected
                           ? "bg-amber-400 text-slate-950 font-black scale-110 shadow-md"
-                          : "bg-white/[0.05] text-slate-400"
+                          : "bg-white/[0.05] text-muted"
                       }`}
                     >
                       {step.num}
@@ -88,11 +77,11 @@ export function LiveRealEstateExample() {
                       <h3 className={`text-sm font-semibold ${isSelected ? "text-amber-300" : "text-slate-200"}`}>
                         {step.title}
                       </h3>
-                      <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{step.desc}</p>
+                      <p className="text-xs text-muted mt-0.5 line-clamp-1">{step.desc}</p>
                     </div>
                   </div>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                    isSelected ? "bg-amber-400/20 text-amber-300 border border-amber-400/40" : "bg-white/[0.04] text-slate-500"
+                    isSelected ? "bg-amber-400/20 text-amber-300 border border-amber-400/40" : "bg-white/[0.04] text-muted"
                   }`}>
                     {step.tag}
                   </span>
@@ -102,7 +91,8 @@ export function LiveRealEstateExample() {
           </div>
 
           {/* Right: Dynamic MMe-AI Assistant Interactive Card */}
-          <div className="lg:col-span-7 rounded-2xl border border-indigo-500/30 bg-[#0c1028]/95 p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
+          <div className="relative lg:col-span-7 rounded-2xl border border-indigo-500/30 bg-surface/95 p-6 sm:p-8 shadow-2xl">
+            <SampleDataBadge className="absolute -top-3 right-4" />
             {/* Header bar */}
             <div className="flex items-center justify-between pb-5 border-b border-white/[0.08]">
               <div className="flex items-center gap-3">
@@ -111,7 +101,7 @@ export function LiveRealEstateExample() {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white tracking-wide">MMe-AI Assistant & Automation</h3>
-                  <span className="text-[11px] text-slate-400">Current Step: <strong className="text-indigo-300">{journeySteps[activeStep].title}</strong></span>
+                  <span className="text-[11px] text-muted">Current Step: <strong className="text-indigo-300">{journeySteps[activeStep].title}</strong></span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -129,7 +119,7 @@ export function LiveRealEstateExample() {
               {activeStep === 0 && (
                 <div className="space-y-4 animate-in fade-in duration-300">
                   <div className="rounded-xl border border-white/[0.08] bg-black/40 p-4">
-                    <div className="text-xs font-medium text-slate-400 mb-2 flex items-center justify-between">
+                    <div className="text-xs font-medium text-muted mb-2 flex items-center justify-between">
                       <span className="flex items-center gap-2 text-indigo-300">
                         <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
                         Inbound Webhook Received:
@@ -137,22 +127,22 @@ export function LiveRealEstateExample() {
                       <span className="text-[10px] font-mono text-emerald-400">0.2s latency</span>
                     </div>
                     <div className="rounded-lg border border-indigo-500/20 bg-indigo-500/[0.06] p-3 text-xs font-mono text-indigo-200 space-y-1">
-                      <div><span className="text-slate-400">Client:</span> Vikramaditya Singhania</div>
-                      <div><span className="text-slate-400">Channel:</span> Meta Ad Campaign #BangaloreNorthLuxury</div>
-                      <div><span className="text-slate-400">Form Note:</span> Looking for 3 BHK high-rise with balcony view near Hebbal, ready in 3 months.</div>
+                      <div><span className="text-muted">Client:</span> Vikramaditya Singhania</div>
+                      <div><span className="text-muted">Channel:</span> Meta Ad Campaign #BangaloreNorthLuxury</div>
+                      <div><span className="text-muted">Form Note:</span> Looking for 3 BHK high-rise with balcony view near Hebbal, ready in 3 months.</div>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-xl border border-white/[0.06] bg-[#090d20] p-3">
-                      <span className="text-[10px] text-slate-400 uppercase font-mono">Contact Info</span>
+                    <div className="rounded-xl border border-white/[0.06] bg-surface p-3">
+                      <span className="text-[10px] text-muted uppercase font-mono">Contact Info</span>
                       <div className="text-xs font-semibold text-white mt-1">+91 98450 •••••</div>
-                      <div className="text-[11px] text-slate-400 truncate">vikram.singhania@techcorp.in</div>
+                      <div className="text-[11px] text-muted truncate">vikram.singhania@techcorp.in</div>
                     </div>
-                    <div className="rounded-xl border border-white/[0.06] bg-[#090d20] p-3">
-                      <span className="text-[10px] text-slate-400 uppercase font-mono">System Trigger</span>
+                    <div className="rounded-xl border border-white/[0.06] bg-surface p-3">
+                      <span className="text-[10px] text-muted uppercase font-mono">System Trigger</span>
                       <div className="text-xs font-semibold text-emerald-400 mt-1">Lead Ingested ✓</div>
-                      <div className="text-[11px] text-slate-400">Multi-tenant DB record created</div>
+                      <div className="text-[11px] text-muted">Multi-tenant DB record created</div>
                     </div>
                   </div>
                 </div>
@@ -173,15 +163,15 @@ export function LiveRealEstateExample() {
                     </div>
                     <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                       <div className="rounded-lg bg-black/40 p-2 border border-white/5">
-                        <span className="text-[10px] text-slate-400 block">Extracted Budget</span>
+                        <span className="text-[10px] text-muted block">Extracted Budget</span>
                         <span className="text-xs font-bold text-amber-400 mt-0.5 block">₹2.5 - 3.0 Cr</span>
                       </div>
                       <div className="rounded-lg bg-black/40 p-2 border border-white/5">
-                        <span className="text-[10px] text-slate-400 block">Preferred Area</span>
+                        <span className="text-[10px] text-muted block">Preferred Area</span>
                         <span className="text-xs font-bold text-white mt-0.5 block">Hebbal / Yelahanka</span>
                       </div>
                       <div className="rounded-lg bg-black/40 p-2 border border-white/5">
-                        <span className="text-[10px] text-slate-400 block">Purchase Timeframe</span>
+                        <span className="text-[10px] text-muted block">Purchase Timeframe</span>
                         <span className="text-xs font-bold text-emerald-400 mt-0.5 block">&lt; 45 Days</span>
                       </div>
                     </div>
@@ -194,7 +184,7 @@ export function LiveRealEstateExample() {
                       </div>
                       <div>
                         <span className="font-semibold text-white">Auto-Assigned Consultant:</span>
-                        <span className="text-slate-400 block text-[11px]">Rajesh Kumar (Senior Luxury Specialist)</span>
+                        <span className="text-muted block text-[11px]">Rajesh Kumar (Senior Luxury Specialist)</span>
                       </div>
                     </div>
                     <span className="rounded bg-indigo-500/20 text-indigo-300 px-2 py-1 text-[10px] font-semibold border border-indigo-500/30">
@@ -216,13 +206,13 @@ export function LiveRealEstateExample() {
                       <span className="text-[10px] text-emerald-400 font-mono">100% criteria match</span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      <div className="rounded-lg border border-white/10 bg-[#121633] p-3 transition-transform hover:scale-105">
+                      <div className="rounded-lg border border-white/10 bg-surface p-3 transition-transform hover:scale-105">
                         <div className="flex items-center gap-1 text-[11px] font-semibold text-white">
                           <Home className="h-3.5 w-3.5 text-indigo-400" />
                           Prestige Towers
                         </div>
                         <div className="text-xs font-bold text-amber-400 mt-1">₹2.4 Cr</div>
-                        <div className="text-[10px] text-slate-400">Hebbal, Bangalore</div>
+                        <div className="text-[10px] text-muted">Hebbal, Bangalore</div>
                         <div className="text-[9px] text-emerald-400 mt-1">3 BHK • 2150 sqft</div>
                       </div>
                       <div className="rounded-lg border border-indigo-500/40 bg-indigo-950/40 p-3 shadow-md transition-transform hover:scale-105">
@@ -231,16 +221,16 @@ export function LiveRealEstateExample() {
                           Sobha Dream
                         </div>
                         <div className="text-xs font-bold text-amber-400 mt-1">₹2.8 Cr</div>
-                        <div className="text-[10px] text-slate-400">Yelahanka, Bangalore</div>
+                        <div className="text-[10px] text-muted">Yelahanka, Bangalore</div>
                         <div className="text-[9px] text-emerald-400 mt-1">3.5 BHK • 2400 sqft</div>
                       </div>
-                      <div className="rounded-lg border border-white/10 bg-[#121633] p-3 transition-transform hover:scale-105">
+                      <div className="rounded-lg border border-white/10 bg-surface p-3 transition-transform hover:scale-105">
                         <div className="flex items-center gap-1 text-[11px] font-semibold text-white">
                           <Home className="h-3.5 w-3.5 text-indigo-400" />
                           Brigade Park
                         </div>
                         <div className="text-xs font-bold text-amber-400 mt-1">₹2.2 Cr</div>
-                        <div className="text-[10px] text-slate-400">Devanahalli, Bangalore</div>
+                        <div className="text-[10px] text-muted">Devanahalli, Bangalore</div>
                         <div className="text-[9px] text-emerald-400 mt-1">3 BHK • 1980 sqft</div>
                       </div>
                     </div>
@@ -265,7 +255,7 @@ export function LiveRealEstateExample() {
                       <span className="text-[10px] font-mono text-emerald-400">Official Cloud API</span>
                     </div>
                     <div className="mt-3 rounded-lg bg-black/60 border border-white/10 p-3 text-xs text-slate-200 leading-relaxed">
-                      "Namaste Vikramaditya ji, thank you for connecting with RS Real Estate. Based on your preference for a 3 BHK in North Bangalore (₹2-3 Cr), our system has reserved previews for <strong>Prestige Towers</strong> and <strong>Sobha Dream</strong>. When would you like to schedule an exclusive site visit this weekend?"
+                      &ldquo;Namaste Vikramaditya ji, thank you for connecting with RS Real Estate. Based on your preference for a 3 BHK in North Bangalore (₹2-3 Cr), our system has reserved previews for <strong>Prestige Towers</strong> and <strong>Sobha Dream</strong>. When would you like to schedule an exclusive site visit this weekend?&rdquo;
                     </div>
                   </div>
 
@@ -300,15 +290,15 @@ export function LiveRealEstateExample() {
                       </span>
                     </div>
                     <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
-                      <div className="rounded-lg bg-[#090d20] p-2.5 border border-white/5">
-                        <span className="text-[10px] text-slate-400 block">Location</span>
+                      <div className="rounded-lg bg-surface p-2.5 border border-white/5">
+                        <span className="text-[10px] text-muted block">Location</span>
                         <span className="font-semibold text-white mt-0.5 block">Prestige Towers - Unit 14B</span>
                         <span className="text-[10px] text-indigo-400">Hebbal Ring Road</span>
                       </div>
-                      <div className="rounded-lg bg-[#090d20] p-2.5 border border-white/5">
-                        <span className="text-[10px] text-slate-400 block">Escort & Executive</span>
+                      <div className="rounded-lg bg-surface p-2.5 border border-white/5">
+                        <span className="text-[10px] text-muted block">Escort & Executive</span>
                         <span className="font-semibold text-white mt-0.5 block">Rajesh Kumar</span>
-                        <span className="text-[10px] text-slate-400">Site manager alerted</span>
+                        <span className="text-[10px] text-muted">Site manager alerted</span>
                       </div>
                     </div>
                   </div>
@@ -335,7 +325,7 @@ export function LiveRealEstateExample() {
                     </div>
                     <div className="mt-3 space-y-2 text-xs">
                       <div className="flex justify-between items-center rounded-lg bg-black/40 p-2">
-                        <span className="text-slate-400">Initial Quote:</span>
+                        <span className="text-muted">Initial Quote:</span>
                         <span className="text-slate-300 font-mono line-through">₹2,80,00,000</span>
                       </div>
                       <div className="flex justify-between items-center rounded-lg bg-indigo-950/40 p-2 border border-indigo-500/30">
@@ -367,22 +357,22 @@ export function LiveRealEstateExample() {
                     <p className="text-xs text-emerald-200 mt-1">Prestige Towers Unit 14B officially booked</p>
                     
                     <div className="mt-4 inline-flex items-center gap-3 rounded-lg bg-black/50 border border-white/10 px-4 py-2 text-xs font-mono">
-                      <span className="text-slate-400">Booking Advance Received:</span>
+                      <span className="text-muted">Booking Advance Received:</span>
                       <span className="text-emerald-400 font-bold text-sm">₹5,00,000</span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="rounded-xl border border-white/[0.06] bg-[#090d20] p-3">
-                      <span className="text-[10px] text-slate-400 uppercase font-mono">Automated Actions</span>
+                    <div className="rounded-xl border border-white/[0.06] bg-surface p-3">
+                      <span className="text-[10px] text-muted uppercase font-mono">Automated Actions</span>
                       <div className="text-[11px] text-slate-200 mt-1">
                         • Digital Agreement e-signed<br />
                         • WhatsApp receipt issued<br />
                         • Inventory marked SOLD
                       </div>
                     </div>
-                    <div className="rounded-xl border border-white/[0.06] bg-[#090d20] p-3">
-                      <span className="text-[10px] text-slate-400 uppercase font-mono">Pipeline Attribution</span>
+                    <div className="rounded-xl border border-white/[0.06] bg-surface p-3">
+                      <span className="text-[10px] text-muted uppercase font-mono">Pipeline Attribution</span>
                       <div className="text-xs font-bold text-white mt-1">₹2.65 Cr Total Deal</div>
                       <div className="text-[11px] text-emerald-400">Gross Margin + Commission logged</div>
                     </div>
@@ -393,8 +383,8 @@ export function LiveRealEstateExample() {
             </div>
 
             {/* Real Estate Use Case Note */}
-            <div className="mt-6 pt-5 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
-              <span>Illustrative walkthrough: <strong className="text-white">RS Real Estate</strong> (sample data)</span>
+            <div className="mt-6 pt-5 border-t border-white/[0.06] flex items-center justify-between text-xs text-muted">
+              <span>Client walkthrough: <strong className="text-white">RS Real Estate</strong> · figures are sample data</span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -415,8 +405,14 @@ export function LiveRealEstateExample() {
 
         </div>
 
+        {showSolutionLink && (
+          <div className="mt-10 text-center">
+            <Link href="/real-estate" className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-300 hover:text-white">
+              See the full real-estate solution <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
 }
-

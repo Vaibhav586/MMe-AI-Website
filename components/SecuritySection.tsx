@@ -35,7 +35,7 @@ export function SecuritySection() {
   ];
 
   return (
-    <section className="relative py-24 lg:py-32 bg-[#060813] border-t border-white/[0.05]">
+    <section className="relative py-24 lg:py-32 bg-bg border-t border-white/[0.05]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -47,7 +47,7 @@ export function SecuritySection() {
           <h2 className="mt-6 text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
             Business data deserves business-grade care.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-muted">
             Security designed for business workflows.
           </p>
         </div>
@@ -59,7 +59,7 @@ export function SecuritySection() {
             return (
               <div
                 key={item.title}
-                className="rounded-2xl border border-white/[0.08] bg-[#0c1026]/80 p-7 transition-all duration-300 hover:border-indigo-500/40 hover:bg-[#101633]"
+                className="rounded-2xl border border-white/[0.08] bg-surface/80 p-7 transition-all duration-300 hover:border-indigo-500/40 hover:bg-surface"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
                   <Icon className="h-5 w-5" />
@@ -67,7 +67,7 @@ export function SecuritySection() {
                 <h3 className="mt-5 text-base font-bold text-white tracking-wide">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                <p className="mt-2 text-xs leading-relaxed text-muted">
                   {item.desc}
                 </p>
               </div>

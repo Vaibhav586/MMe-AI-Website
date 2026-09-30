@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LegalDocument } from "@/components/LegalDocument";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/refund-policy" },
   title: "Refund Policy | MMe-AI",
   description:
     "Refund Policy for MMe-AI custom dashboard setup and monthly subscription services.",
