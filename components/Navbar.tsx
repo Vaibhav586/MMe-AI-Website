@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useDemoModal } from "@/components/DemoModalProvider";
 import { Logo } from "@/components/Logo";
+import { UserMenu, useSessionUser } from "@/components/UserMenu";
+import { signOut } from "next-auth/react";
 
 // Industries with their own page link to it; the rest open the audit form with that industry preselected.
 const SOLUTIONS: { label: string; href?: string; industry?: string }[] = [
@@ -27,6 +29,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const solutionsRef = useRef<HTMLDivElement>(null);
+  const user = useSessionUser();
 
   // Close the Solutions dropdown on outside click or Escape.
   useEffect(() => {
@@ -95,7 +98,7 @@ export function Navbar() {
 
         {/* Desktop actions */}
         <div className="hidden lg:flex items-center gap-5">
-          <Link href="/login" className={linkClass}>Login</Link>
+          {user ? <UserMenu user={user} /> : <Link href="/login" className={linkClass}>Login</Link>}
           <button
             type="button"
             onClick={() => openDemo({ source: "nav", label: "Get a free audit" })}
@@ -114,6 +117,7 @@ export function Navbar() {
           >
             Get a free audit
           </button>
+          {user && <UserMenu user={user} />}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((o) => !o)}
@@ -157,9 +161,20 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-200">Login</Link>
-            </li>
+            {user ? (
+              <>
+                <li>
+                  <Link href="/portal" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-200">My portal</Link>
+                </li>
+                <li>
+                  <button type="button" onClick={() => signOut({ redirectTo: "/" })} className="block py-2 text-left text-base font-medium text-slate-200">Sign out</button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-200">Login</Link>
+              </li>
+            )}
           </ul>
         </nav>
       )}
