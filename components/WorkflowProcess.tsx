@@ -206,7 +206,7 @@ export function WorkflowProcess() {
                 <div className="rounded-xl border border-indigo-500/30 bg-indigo-950/20 p-4">
                   <span className="text-xs font-mono uppercase tracking-wider text-indigo-300 flex items-center gap-1.5 mb-1.5">
                     <FileText className="h-3.5 w-3.5" />
-                    Verified Output Sample
+                    Illustrative Output Sample
                   </span>
                   <p className="text-xs text-slate-200 italic font-mono">
                     "{current.sampleOutput}"

@@ -10,6 +10,7 @@ import {
   Briefcase, 
   ChevronRight
 } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
 
 export function IndustrySwitcher() {
   const [activeVertical, setActiveVertical] = useState<string>("real-estate");
@@ -220,7 +221,10 @@ export function IndustrySwitcher() {
           </div>
 
           {/* Metrics Grid */}
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="mt-8 flex justify-end">
+            <IllustrativeBadge />
+          </div>
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {current.metrics.map((metric) => (
               <div
                 key={metric.label}

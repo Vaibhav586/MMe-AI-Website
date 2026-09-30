@@ -12,12 +12,10 @@ import {
   RefreshCw,
   Building
 } from "lucide-react";
+import { useDemoModal } from "@/components/DemoModalProvider";
 
-interface ArchitectureAndCalculatorProps {
-  onOpenDemo: () => void;
-}
-
-export function ArchitectureAndCalculator({ onOpenDemo }: ArchitectureAndCalculatorProps) {
+export function ArchitectureAndCalculator() {
+  const { openDemo } = useDemoModal();
   // Calculator state
   const [basePrice, setBasePrice] = useState<number>(5000);
   const [usageCost, setUsageCost] = useState<number>(2000);
@@ -356,7 +354,7 @@ export function ArchitectureAndCalculator({ onOpenDemo }: ArchitectureAndCalcula
 
             <div className="mt-6 text-center">
               <button
-                onClick={onOpenDemo}
+                onClick={() => openDemo()}
                 className="glow-button w-full rounded-full py-3.5 text-sm font-semibold text-white shadow-lg"
               >
                 Book an Enterprise Demo with this Estimate

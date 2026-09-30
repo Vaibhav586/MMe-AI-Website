@@ -1,5 +1,3 @@
-"use client";
-
 import { Lock, Users, ShieldAlert, History, Server, Sliders, Shield } from "lucide-react";
 
 export function SecuritySection() {

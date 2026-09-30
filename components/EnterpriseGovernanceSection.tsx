@@ -18,6 +18,8 @@ import {
   ArrowRight,
   Database
 } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
+import { SOC2_CLAIM } from "@/lib/claims";
 
 export function EnterpriseGovernanceSection() {
   const [activeGovernanceTab, setActiveGovernanceTab] = useState<"agents" | "observability" | "memory" | "approval">("observability");
@@ -53,7 +55,7 @@ export function EnterpriseGovernanceSection() {
       role: "Auditor Agent",
       badge: "Compliance & Ledger",
       desc: "Logs every event, latency metric, token cost, and user interaction into an immutable, replayable run ledger.",
-      contract: "SOC 2 Type II audit ready with cryptographic provenance.",
+      contract: `${SOC2_CLAIM}; cryptographic provenance on every event.`,
     },
   ];
 
@@ -165,6 +167,9 @@ export function EnterpriseGovernanceSection() {
 
               {/* Execution Run Timeline */}
               <div className="space-y-3 font-mono text-xs">
+                <div className="flex justify-end">
+                  <IllustrativeBadge />
+                </div>
                 {[
                   { step: "01", name: "Inbound Intent Classifier", agent: "Planner Agent", latency: "140ms", tokens: "412 tok ($0.0012)", status: "PASSED", detail: "Parsed customer query: 'Looking for 3 BHK high-rise in Hebbal, ₹2.5-3 Cr budget'. Extracted intent: VIP Luxury Buyer." },
                   { step: "02", name: "Context & Catalog Retrieval", agent: "Researcher Agent", latency: "220ms", tokens: "1,204 tok ($0.0036)", status: "PASSED", detail: "Searched inventory catalog. Surfaced Prestige Towers (Unit 14B) & Sobha Dream with 100% budget match." },
@@ -215,8 +220,8 @@ export function EnterpriseGovernanceSection() {
                   <span className="text-base font-bold text-indigo-300 font-mono mt-0.5 block">Claude 3.5 + GPT-4o</span>
                 </div>
                 <div className="rounded-lg bg-black/40 p-3">
-                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Audit Compliance</span>
-                  <span className="text-base font-bold text-amber-400 font-mono mt-0.5 block">SOC 2 Type II Ready</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Audit Controls</span>
+                  <span className="text-base font-bold text-amber-400 font-mono mt-0.5 block">SOC 2-aligned</span>
                 </div>
               </div>
             </div>

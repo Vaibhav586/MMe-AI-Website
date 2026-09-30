@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { PLANS, PLAN_ORDER } from "@/lib/pricing";
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First item open by default
@@ -41,7 +42,7 @@ export function FAQSection() {
     },
     {
       q: "How is pricing calculated?",
-      a: "MMe-AI runs on three transparent B2B tiers—Basic (₹30,000/mo), Pro (₹65,000/mo), and Plus/Enterprise (₹1,20,000+/mo). Each tier includes predictable monthly AI credits covering reasoning and multi-step executions, built-in daily rate safeguards for 100% uptime, and custom enterprise pricing available on request.",
+      a: `MMe-AI runs on three B2B tiers, each with a one-time setup fee and a monthly plan: ${PLAN_ORDER.map((id) => `${PLANS[id].name} (${PLANS[id].setupPrice} setup + ${PLANS[id].monthlyPrice}/mo)`).join(", ")}. Each tier includes a monthly AI capacity allocation and built-in daily rate safeguards. Final scope and pricing can vary with workflow complexity, integrations and deployment requirements.`,
     },
     {
       q: "Who is MMe-AI designed for?",

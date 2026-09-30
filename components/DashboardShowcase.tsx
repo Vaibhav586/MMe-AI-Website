@@ -27,6 +27,8 @@ import {
   Zap,
   Bot
 } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
+import { PLANS } from "@/lib/pricing";
 
 export function DashboardShowcase() {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -135,6 +137,7 @@ export function DashboardShowcase() {
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
+              <IllustrativeBadge className="hidden sm:inline-flex" />
               <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Tenant: RS Real Estate
@@ -447,10 +450,10 @@ export function DashboardShowcase() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { name: "Prestige Group (Residences)", plan: "Enterprise Custom", mrr: "₹1,45,000 / mo", health: "99%", users: "24 Agents", activeModules: "8 / 8 Active" },
-                  { name: "Sobha Developers (Luxury Div)", plan: "Growth Tier", mrr: "₹85,000 / mo", health: "94%", users: "12 Agents", activeModules: "6 / 8 Active" },
-                  { name: "Brigade Realty Partners", plan: "Growth Tier", mrr: "₹75,000 / mo", health: "92%", users: "10 Agents", activeModules: "5 / 8 Active" },
-                  { name: "Apex Commercial Estates", plan: "Starter Base", mrr: "₹35,000 / mo", health: "88%", users: "4 Agents", activeModules: "3 / 8 Active" },
+                  { name: "Northgate Residences (sample)", plan: PLANS.enterprise.name, mrr: `${PLANS.enterprise.monthlyPrice} / mo`, health: "99%", users: "24 Agents", activeModules: "8 / 8 Active" },
+                  { name: "Lakeview Developers (sample)", plan: PLANS.growth.name, mrr: `${PLANS.growth.monthlyPrice} / mo`, health: "94%", users: "12 Agents", activeModules: "6 / 8 Active" },
+                  { name: "Harbour Realty Partners (sample)", plan: PLANS.growth.name, mrr: `${PLANS.growth.monthlyPrice} / mo`, health: "92%", users: "10 Agents", activeModules: "5 / 8 Active" },
+                  { name: "Apex Commercial Estates (sample)", plan: PLANS.basic.name, mrr: `${PLANS.basic.monthlyPrice} / mo`, health: "88%", users: "4 Agents", activeModules: "3 / 8 Active" },
                 ].map((cust) => (
                   <div key={cust.name} className="rounded-xl border border-white/[0.08] bg-[#090d20] p-5 flex flex-col justify-between hover:border-indigo-500/30 transition-all">
                     <div>

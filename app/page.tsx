@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { ProblemSection } from "@/components/ProblemSection";
@@ -20,39 +17,23 @@ import { ArchitectureAndCalculator } from "@/components/ArchitectureAndCalculato
 import { PricingSection } from "@/components/PricingSection";
 import { FAQSection } from "@/components/FAQSection";
 import { CTAAndFooter } from "@/components/CTAAndFooter";
-import { BookDemoModal } from "@/components/BookDemoModal";
+import { DemoModalProvider } from "@/components/DemoModalProvider";
 
+// Server Component: static sections render to HTML with no client JS.
+// Interactive sections are their own client components; the demo modal lives in DemoModalProvider.
 export default function Home() {
-  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<string | undefined>(undefined);
-
-  const handleOpenDemo = (planName?: string) => {
-    setSelectedPlan(planName);
-    setIsDemoModalOpen(true);
-  };
-
-  const handleCloseDemo = () => {
-    setIsDemoModalOpen(false);
-    setSelectedPlan(undefined);
-  };
-
   return (
+    <DemoModalProvider>
     <div id="top" className="min-h-screen bg-[#070913] text-[#f8fafc] selection:bg-indigo-500/30 selection:text-white">
       {/* Sticky Navbar */}
-      <Navbar 
-        onOpenDemo={() => handleOpenDemo()} 
-        onOpenAction={() => {
-          const el = document.getElementById("rs-real-estate");
-          if (el) el.scrollIntoView({ behavior: "smooth" });
-        }}
-      />
+      <Navbar />
 
       <main id="main-content">
         {/* 1. Hero Section + Interactive Hero Dashboard Preview */}
-        <HeroSection onOpenDemo={() => handleOpenDemo()} />
+        <HeroSection />
 
         {/* 2. Value-Based Credit Pricing (High-priority, directly below Hero) */}
-        <PricingSection onOpenDemo={(plan) => handleOpenDemo(plan)} />
+        <PricingSection />
 
         {/* 3. Problem & Reality Check (Tangled software diagram + Pain points) */}
         <ProblemSection />
@@ -93,10 +74,10 @@ export default function Home() {
         <SecuritySection />
 
         {/* 14. Integration Strategy (Already have a CRM? Good. Keep it.) */}
-        <IntegrationSection onOpenDemo={() => handleOpenDemo()} />
+        <IntegrationSection />
 
         {/* 14. Client-based Subscription Architecture & Pricing Formula Calculator (From attached diagram!) */}
-        <ArchitectureAndCalculator onOpenDemo={() => handleOpenDemo()} />
+        <ArchitectureAndCalculator />
 
         {/* 15. Comprehensive FAQ Accordion */}
         <FAQSection />
@@ -104,15 +85,9 @@ export default function Home() {
 
       {/* 17. Pre-footer Banner & Rich Footer */}
       <div id="book-demo">
-        <CTAAndFooter onOpenDemo={() => handleOpenDemo()} />
+        <CTAAndFooter />
       </div>
-
-      {/* Interactive Booking Modal */}
-      <BookDemoModal
-        isOpen={isDemoModalOpen}
-        onClose={handleCloseDemo}
-        defaultPlan={selectedPlan}
-      />
     </div>
+    </DemoModalProvider>
   );
 }

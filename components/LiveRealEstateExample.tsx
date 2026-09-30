@@ -394,7 +394,7 @@ export function LiveRealEstateExample() {
 
             {/* Real Estate Use Case Note */}
             <div className="mt-6 pt-5 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
-              <span>Live Case Study: <strong className="text-white">RS Real Estate</strong></span>
+              <span>Illustrative walkthrough: <strong className="text-white">RS Real Estate</strong> (sample data)</span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"

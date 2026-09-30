@@ -18,12 +18,11 @@ import {
   UserCheck,
   MessageSquare
 } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
+import { useDemoModal } from "@/components/DemoModalProvider";
 
-interface HeroSectionProps {
-  onOpenDemo: () => void;
-}
-
-export function HeroSection({ onOpenDemo }: HeroSectionProps) {
+export function HeroSection() {
+  const { openDemo } = useDemoModal();
   const [activeTab, setActiveTab] = useState<"LEAD" | "AI" | "WORKFLOW" | "ACTION" | "ANALYTICS">("LEAD");
   const [eventTriggered, setEventTriggered] = useState(false);
 
@@ -184,7 +183,7 @@ export function HeroSection({ onOpenDemo }: HeroSectionProps) {
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={onOpenDemo}
+              onClick={() => openDemo()}
               className="glow-button inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-[0_0_25px_rgba(99,102,241,0.4)]"
             >
               <span>Book an Enterprise Demo</span>
@@ -225,6 +224,9 @@ export function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
           {/* Main Dashboard Card Container */}
           <div className="relative rounded-2xl border border-white/10 bg-[#0d1229]/90 p-5 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl glow-card-purple transition-all duration-300">
+            <div className="mb-3 flex justify-end">
+              <IllustrativeBadge />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
               
               {/* Left Column: Dynamic Metrics based on activeTab */}

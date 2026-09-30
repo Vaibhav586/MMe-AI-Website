@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   Play
 } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
 
 export function ProductModules() {
   const [selectedModule, setSelectedModule] = useState<string>("lead-mgmt");
@@ -254,13 +255,14 @@ export function ProductModules() {
 
         {/* Dynamic Interactive Drawer for selected module */}
         <div className="mt-10 rounded-xl border border-white/[0.08] bg-[#0c1026]/90 p-5 flex flex-wrap items-center justify-between gap-4 text-xs">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
             <span className="text-slate-300">
               Selected Module: <strong className="text-white">{modules.find(m => m.id === selectedModule)?.title}</strong>
             </span>
             <span className="text-slate-500">|</span>
             <span className="text-slate-400">Status: Integrated & Ready in Multi-tenant Bundle</span>
+            <IllustrativeBadge />
           </div>
           <div className="text-indigo-400 font-mono">
             {selectedModule === "content" && captionDraft}

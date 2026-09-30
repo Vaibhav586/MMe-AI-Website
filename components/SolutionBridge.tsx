@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Database, MessageSquare, Mail, Cpu, ArrowRight, Zap, CheckCircle2, AlertOctagon, TrendingUp, Layers } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
 
 export function SolutionBridge() {
   const [activeCategory, setActiveCategory] = useState<"tools" | "mme" | "actions">("mme");
@@ -22,6 +23,9 @@ export function SolutionBridge() {
 
         {/* Architectural Flow Diagram Card */}
         <div className="mt-14 mx-auto max-w-4xl rounded-2xl border border-indigo-500/20 bg-[#0a0e24]/90 p-8 sm:p-12 shadow-[0_20px_60px_rgba(99,102,241,0.12)] backdrop-blur-xl glow-card-purple">
+          <div className="-mt-4 sm:-mt-6 mb-4 flex justify-end">
+            <IllustrativeBadge />
+          </div>
 
           {/* VIEW 1: EXISTING TOOLS (Friction & Silos) */}
           {activeCategory === "tools" && (

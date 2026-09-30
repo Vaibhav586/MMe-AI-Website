@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { X, Send, MessageSquare, CheckCircle2, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { X, Send, MessageSquare, CheckCircle2, Sparkles, AlertTriangle, Loader2 } from "lucide-react";
+import { SALES_EMAIL, whatsappLink } from "@/lib/contact";
 
 interface BookDemoModalProps {
   isOpen: boolean;
@@ -15,41 +17,74 @@ export function BookDemoModal({ isOpen, onClose, defaultPlan }: BookDemoModalPro
   const [phone, setPhone] = useState("");
   const [industry, setIndustry] = useState("Real Estate");
   const [bottleneck, setBottleneck] = useState(
-    defaultPlan ? `Interested in ${defaultPlan} Plan` : ""
+    defaultPlan ? `Interested in the ${defaultPlan}` : ""
   );
-  const [submitted, setSubmitted] = useState(false);
+  const [consent, setConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "saved" | "error">("idle");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          industry,
+          plan: defaultPlan || "",
+          message: bottleneck,
+          consent,
+          company_website: honeypot,
+        }),
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      setStatus("saved");
+      // Conversion event for Google Tag Manager / GA4, if a tag is installed.
+      (window as unknown as { dataLayer?: object[] }).dataLayer?.push({
+        event: "demo_request_submitted",
+        industry,
+        plan: defaultPlan || "none",
+      });
+    } catch {
+      setStatus("error");
+    }
+  };
 
-    const subject = encodeURIComponent(`MMe-AI Enterprise Demo Request: ${name} (${industry})`);
+  const fallbackMailto = () => {
+    const subject = encodeURIComponent(`MMe-AI Demo Request: ${name} (${industry})`);
     const body = encodeURIComponent(
-      `Hi MMe-AI Team,\n\nI would like to book an enterprise demo of the MMe-AI Business OS.\n\n` +
-      `Name: ${name}\n` +
-      `Email: ${email}\n` +
-      `Phone: ${phone}\n` +
-      `Industry: ${industry}\n` +
-      `Preferred Plan: ${defaultPlan || "Custom"}\n\n` +
-      `Workflow Bottleneck / Needs:\n${bottleneck}\n\n` +
-      `Looking forward to connecting.`
-    );
+      `Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Industry: ${industry}
+` +
+      `Plan: ${defaultPlan || "Not selected"}
 
-    // Launch email client
-    window.location.href = `mailto:mmeai.official@gmail.com?subject=${subject}&body=${body}`;
+Workflows to automate:
+${bottleneck}`
+    );
+    return `mailto:${SALES_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   const handleWhatsApp = () => {
-    const text = encodeURIComponent(
-      `Hi Manish, I want to book an enterprise demo for MMe-AI.\n` +
-      `Name: ${name || "Potential Client"}\n` +
-      `Industry: ${industry}\n` +
-      `Phone: ${phone}\n` +
-      `Requirements: ${bottleneck || "Automating business workflows"}`
+    window.open(
+      whatsappLink(
+        `Hi MMe-AI team, I just requested a demo.
+` +
+        `Name: ${name || "Potential Client"}
+` +
+        `Industry: ${industry}
+` +
+        `Requirements: ${bottleneck || "Automating business workflows"}`
+      ),
+      "_blank"
     );
-    window.open(`https://wa.me/918851144571?text=${text}`, "_blank");
   };
 
   return (
@@ -68,14 +103,14 @@ export function BookDemoModal({ isOpen, onClose, defaultPlan }: BookDemoModalPro
           <X className="h-5 w-5" />
         </button>
 
-        {submitted ? (
+        {status === "saved" ? (
           <div className="py-8 text-center space-y-4">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
               <CheckCircle2 className="h-8 w-8" />
             </div>
-            <h3 className="text-xl font-bold text-white">Your Request is Ready!</h3>
+            <h3 className="text-xl font-bold text-white">Thanks, {name.split(" ")[0] || "we've got it"}!</h3>
             <p className="text-sm text-slate-300 max-w-sm mx-auto">
-              Your email client should have opened with your pre-filled inquiry. You can also message Manish directly on WhatsApp for an immediate response.
+              Your demo request has been received. Our team will get in touch at <strong className="text-white">{email}</strong>.
             </p>
             <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
               <button
@@ -83,13 +118,10 @@ export function BookDemoModal({ isOpen, onClose, defaultPlan }: BookDemoModalPro
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-2.5 text-sm shadow-md"
               >
                 <MessageSquare className="h-4 w-4" />
-                WhatsApp Manish Directly
+                Chat now on WhatsApp
               </button>
               <button
-                onClick={() => {
-                  setSubmitted(false);
-                  onClose();
-                }}
+                onClick={onClose}
                 className="rounded-full border border-white/15 px-6 py-2.5 text-sm text-slate-300 hover:bg-white/10"
               >
                 Close
@@ -190,27 +222,55 @@ export function BookDemoModal({ isOpen, onClose, defaultPlan }: BookDemoModalPro
                 />
               </div>
 
-              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              {/* Honeypot: hidden from people, filled in by bots */}
+              <input
+                type="text"
+                name="company_website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                className="hidden"
+              />
+
+              <label className="flex items-start gap-2.5 text-[11px] leading-relaxed text-slate-400">
+                <input
+                  type="checkbox"
+                  required
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-indigo-500"
+                />
+                <span>
+                  I agree that MMe-AI may store these details and contact me about my demo request, as described in the{" "}
+                  <Link href="/privacy-policy" target="_blank" className="text-indigo-300 underline hover:text-white">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
+              </label>
+
+              {status === "error" && (
+                <div role="alert" className="flex items-start gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-200">
+                  <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>
+                    We couldn&apos;t save your request. Please try again, or{" "}
+                    <a href={fallbackMailto()} className="underline hover:text-white">email it to {SALES_EMAIL}</a>.
+                  </span>
+                </div>
+              )}
+
+              <div className="pt-2">
                 <button
                   type="submit"
-                  className="glow-button flex-1 rounded-full py-3 text-sm font-semibold text-white shadow-md flex items-center justify-center gap-2"
+                  disabled={status === "submitting"}
+                  className="glow-button w-full rounded-full py-3 text-sm font-semibold text-white shadow-md flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  <Send className="h-4 w-4" />
-                  <span>Submit Enterprise Demo Request</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={handleWhatsApp}
-                  className="rounded-full border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 px-5 py-3 text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
-                >
-                  <MessageSquare className="h-4 w-4 text-emerald-400" />
-                  <span>WhatsApp</span>
+                  {status === "submitting" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  <span>{status === "submitting" ? "Sending..." : "Request a Demo"}</span>
                 </button>
               </div>
-
-              <p className="text-[11px] text-center text-slate-500 mt-2">
-                Sends directly to <strong className="text-slate-400">mmeai.official@gmail.com</strong> & Manish Kumar (+91 8851144571).
-              </p>
             </form>
           </div>
         )}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { UserCheck, BellRing, BarChart, PenTool, Sparkles, Play, CheckCircle2, Bot } from "lucide-react";
+import { IllustrativeBadge } from "@/components/IllustrativeBadge";
 
 export function AIAgentsSection() {
   const [selectedAgent, setSelectedAgent] = useState<string>("lead-qualifier");
@@ -177,7 +178,10 @@ export function AIAgentsSection() {
               {simulating ? "Processing..." : "Run Test Simulation"}
             </button>
           </div>
-          <div className="mt-3 p-4 rounded-xl bg-black/60 border border-white/5 font-mono text-xs text-indigo-200 leading-relaxed">
+          <div className="mt-3 flex justify-end">
+            <IllustrativeBadge />
+          </div>
+          <div className="mt-2 p-4 rounded-xl bg-black/60 border border-white/5 font-mono text-xs text-indigo-200 leading-relaxed">
             {simulating ? (
               <span className="flex items-center gap-2 text-amber-400 animate-pulse">
                 <span className="h-2 w-2 rounded-full bg-amber-400" />

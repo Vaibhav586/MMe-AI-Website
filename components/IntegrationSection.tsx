@@ -1,12 +1,7 @@
-"use client";
-
 import { Database, MessageSquare, Mail, FileSpreadsheet, ArrowDown, ArrowRight, Zap, Eye, CheckCircle2 } from "lucide-react";
+import { DemoButton } from "@/components/DemoButton";
 
-interface IntegrationSectionProps {
-  onOpenDemo: () => void;
-}
-
-export function IntegrationSection({ onOpenDemo }: IntegrationSectionProps) {
+export function IntegrationSection() {
   return (
     <section className="relative py-24 lg:py-32 bg-[#070914] border-t border-white/[0.05]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -93,13 +88,10 @@ export function IntegrationSection({ onOpenDemo }: IntegrationSectionProps) {
 
           {/* CTA Button */}
           <div className="mt-10 text-center">
-            <button
-              onClick={onOpenDemo}
-              className="glow-button inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-lg"
-            >
+            <DemoButton className="glow-button inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-lg">
               <span>Find Your First Automation</span>
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </DemoButton>
           </div>
 
         </div>

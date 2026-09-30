@@ -1,5 +1,3 @@
-"use client";
-
 import { Crown, Briefcase, Cog } from "lucide-react";
 
 export function RoleViewsSection() {

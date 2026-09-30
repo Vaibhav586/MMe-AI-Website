@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, ArrowRight, Zap, Database, Shield, Eye, CheckCircle2, Lock, Cpu, Layers } from "lucide-react";
+import { SOC2_CLAIM } from "@/lib/claims";
 
 export function ComparisonSection() {
   const [activeTab, setActiveTab] = useState<"architecture" | "pillars">("architecture");
@@ -58,7 +59,7 @@ export function ComparisonSection() {
     },
     {
       capability: "Enterprise Data Isolation",
-      mme: "Zero customer data training, strict tenant isolation, and SOC 2 Type II compliance",
+      mme: `Zero customer data training and strict tenant isolation. ${SOC2_CLAIM}.`,
       legacy: "Ambiguous model provider data usage policies and shared tenant data stores",
     },
   ];

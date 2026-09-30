@@ -1,26 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { PLANS } from "@/lib/pricing";
+import { SOC2_CLAIM } from "@/lib/claims";
+import { useDemoModal } from "@/components/DemoModalProvider";
 import { Check, Sparkles, Lock, EyeOff, UserCog, Link2, CheckCircle2, ArrowDown } from "lucide-react";
 
-interface PricingSectionProps {
-  onOpenDemo: (planName?: string) => void;
-}
-
-export function PricingSection({ onOpenDemo }: PricingSectionProps) {
-  const [selectedPlan, setSelectedPlan] = useState<string>("Growth");
+export function PricingSection() {
+  const { openDemo: onOpenDemo } = useDemoModal();
+  const [selectedPlan, setSelectedPlan] = useState<string>(PLANS.growth.name.toUpperCase());
 
   const plans = [
     {
       id: "basic",
-      name: "BASIC",
+      name: PLANS.basic.name.toUpperCase(),
       badge: "GROWING BUSINESS",
       tagline: "Growing businesses / boutique sales teams",
-      setupPrice: "₹19,999",
+      setupPrice: PLANS.basic.setupPrice,
       setupLabel: "one-time",
-      monthlyPrice: "₹9,999",
-      monthlyOldPrice: "₹20,000",
-      setupOldPrice: "₹29,999",
+      monthlyPrice: PLANS.basic.monthlyPrice,
       seats: "Up to 5 seats",
       aiCapacity: "Standard AI capacity",
       features: [
@@ -36,14 +34,12 @@ export function PricingSection({ onOpenDemo }: PricingSectionProps) {
     },
     {
       id: "growth",
-      name: "GROWTH",
+      name: PLANS.growth.name.toUpperCase(),
       badge: "RECOMMENDED FOR SCALING TEAMS",
       tagline: "Scaling mid-market companies / RevOps teams",
-      setupPrice: "₹44,999",
+      setupPrice: PLANS.growth.setupPrice,
       setupLabel: "one-time",
-      monthlyPrice: "₹24,999",
-      monthlyOldPrice: "₹50,000",
-      setupOldPrice: "₹59,999",
+      monthlyPrice: PLANS.growth.monthlyPrice,
       seats: "Up to 15 seats",
       aiCapacity: "Higher AI capacity",
       features: [
@@ -62,14 +58,12 @@ export function PricingSection({ onOpenDemo }: PricingSectionProps) {
     },
     {
       id: "enterprise",
-      name: "ENTERPRISE",
+      name: PLANS.enterprise.name.toUpperCase(),
       badge: "FULL GOVERNANCE",
       tagline: "Large enterprises / high-volume operations",
-      setupPrice: "₹75,999",
+      setupPrice: PLANS.enterprise.setupPrice,
       setupLabel: "one-time",
-      monthlyPrice: "₹49,999",
-      monthlyOldPrice: "₹1,00,000",
-      setupOldPrice: "₹99,999",
+      monthlyPrice: PLANS.enterprise.monthlyPrice,
       seats: "Unlimited / extended",
       aiCapacity: "Custom / high-volume",
       features: [
@@ -156,11 +150,6 @@ export function PricingSection({ onOpenDemo }: PricingSectionProps) {
                   <div className="mt-5 pb-5 border-b border-white/[0.07] space-y-3">
                     <div>
                       <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">One-time Setup</span>
-                      {plan.setupOldPrice && (
-                        <div className="flex items-baseline gap-2 mt-0.5">
-                          <span className="text-sm font-medium text-slate-600 line-through font-mono">{plan.setupOldPrice}</span>
-                        </div>
-                      )}
                       <div className="flex items-baseline gap-1.5 mt-0.5">
                         <span className="text-3xl font-black tracking-tight text-white font-mono">{plan.setupPrice}</span>
                         <span className="text-xs text-slate-500">{plan.setupLabel}</span>
@@ -168,12 +157,6 @@ export function PricingSection({ onOpenDemo }: PricingSectionProps) {
                     </div>
                     <div>
                       <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Monthly</span>
-                      {plan.monthlyOldPrice && (
-                        <div className="flex items-baseline gap-2 mt-0.5">
-                          <span className="text-sm font-medium text-slate-600 line-through font-mono">{plan.monthlyOldPrice}</span>
-                          <span className="text-[9px] font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-1.5 py-0.5 rounded">Current Price</span>
-                        </div>
-                      )}
                       <div className="flex items-baseline gap-1.5 mt-0.5">
                         <span className="text-2xl font-black tracking-tight text-indigo-300 font-mono">{plan.monthlyPrice}</span>
                         <span className="text-xs text-slate-400">/ month</span>
@@ -340,7 +323,7 @@ export function PricingSection({ onOpenDemo }: PricingSectionProps) {
           <p className="text-xs text-slate-500">www.mme-ai.com &nbsp;·&nbsp; Less busywork. More business.</p>
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
             <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />No long-term lock-in on monthly plans</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />SOC 2 Type II compliant infrastructure</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />{SOC2_CLAIM}</span>
             <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />Upgrade, downgrade, or cancel anytime</span>
           </div>
         </div>
